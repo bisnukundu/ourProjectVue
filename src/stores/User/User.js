@@ -6,9 +6,9 @@ export const useUserStore = defineStore("user", function () {
   const userRegister = async (userData) => {
     try {
       const response = await axios.post(`${base_url}/user/register`, userData);
-      console.log(response);
+      return response;
     } catch (error) {
-        console.log('%cUser.js line:11 object', 'color: #007acc;', error);
+      return error.response;
     }
   };
   return { userRegister };
