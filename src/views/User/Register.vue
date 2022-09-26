@@ -10,14 +10,18 @@ import ErrorMessage from "../../components/ErrorMessage.vue";
 
 const userStore = useUserStore();
 const router = useRouter();
+const route = useRoute();
 let error = ref("");
+
+// just for testing
+let date = new Date();
 const RegisterData = reactive({
-  full_name: "",
-  email: "",
-  phone: "",
-  sponserId: "",
-  password: "",
-  password_confirmation: "",
+  full_name: "Bisnu kundu",
+  email: "bisnu" + date.getSeconds() + "@gmail.com",
+  phone: "0147797914",
+  sponserId: route.query.sopnser ?? "",
+  password: "password",
+  password_confirmation: "password",
 });
 
 let ruels = {
@@ -38,13 +42,20 @@ const submitRegister = async () => {
   let validate = await v$.value.$validate();
   if (validate) {
     const userRegister = await userStore.userRegister(RegisterData);
-    if (userRegister.status === 200) {
+
+    if (userRegister.status === 200 && userRegister.data.status == "pass") {
       Swal.fire({
         title: "অভিনন্দন!",
         html: `আপনার অ্যাকাউন্টি রেজিস্ট্রেশন সম্পূর্ণ হয়েছে। আপনার Username : <b>${userRegister.data.data.user_name}</b>`,
         icon: "success",
       });
       router.push({ name: "user.login" });
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "আপনার SponserID সঠিক নয়!",
+        icon: "error",
+      });
     }
   } else {
     Swal.fire({
@@ -153,9 +164,11 @@ const submitRegister = async () => {
             msg="আপনার Sponser Name ভুলে হয়েছে!"
             fild="sponserId"
           />
+
           <input
-            class="text-black rounded-md block w-full mb-5"
+            class="text-gray-700 font-bold bg-gray-300 rounded-md block w-full mb-5"
             type="text"
+            disabled="false"
             placeholder="SponserID..."
             v-model="RegisterData.sponserId"
             @blur="v$.sponserId.$touch"

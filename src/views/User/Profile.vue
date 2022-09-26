@@ -6,7 +6,7 @@ const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
 
 <template>
   <Layout>
-    <div class="w-full border text-center mt-28 rounded-md">
+    <div class="w-full border py-4 text-center mt-28 rounded-md">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -23,18 +23,25 @@ const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
       </svg>
 
       <!-- //Profile Details  -->
-      <div class="space-y-3">
-        <p class="bg-slate-800 py-2 rounded-md">
-          <b>FullName</b> : {{userInfo.full_name}}
+      <div class="space-y-3 text-left inline-block">
+        <p class="bg-slate-800 py-2 px-5 rounded-md">
+          <b>FullName</b> : {{ userInfo.full_name }}
         </p>
-        <p class="bg-slate-800 py-2 rounded-md">
-          <b>UserName</b> : {{userInfo.user_name}}
+        <p class="bg-slate-800 py-2 px-5 rounded-md">
+          <b>UserName</b>: {{ userInfo.user_name }}
         </p>
-        <p class="bg-slate-800 py-2 rounded-md">
-          <b>Email</b> : {{userInfo.email}}
+        <p class="bg-slate-800 py-2 px-5 rounded-md">
+          <b>Email</b> : {{ userInfo.email }}
         </p>
-        <p class="bg-slate-800 py-2 rounded-md"><b>Phone</b> : {{userInfo.phone}}</p>
-        <p class="bg-slate-800 py-2 rounded-md"><b>SponserID</b> : {{userInfo.sponserId}}</p>
+        <p class="bg-slate-800 py-2 px-5 rounded-md">
+          <b>Phone</b>: {{ userInfo.phone }}
+        </p>
+        <p class="bg-slate-800 py-2 px-5 rounded-md">
+          <b>SponserID</b> : {{ userInfo.sponserId }}
+        </p>
+        <p class="bg-slate-800 py-2  cursor-copy px-5 rounded-md">
+          <b>Referral Link</b>: {{ userInfo.referral_link }}
+        </p>
       </div>
     </div>
   </Layout>
