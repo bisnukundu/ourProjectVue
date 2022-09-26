@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-  
     {
       path: "/user/login",
       name: "user.login",
@@ -28,6 +27,15 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/user/profile",
+      name: "user.profile",
+      component: () => import("../views/User/Profile.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    
   ],
 });
 router.beforeEach((to, from) => {
