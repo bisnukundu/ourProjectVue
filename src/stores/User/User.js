@@ -11,5 +11,29 @@ export const useUserStore = defineStore("user", function () {
       return error.response;
     }
   };
-  return { userRegister };
+  const userLogin = async (loginData) => {
+    try {
+      const response = await axios.post(`${base_url}/user/login`, loginData);
+      return response;
+    } catch (error) {
+      return error.response;
+    }
+  };
+  const userLogout = async (token) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    const bodyParameters = {
+      key: "value",
+    };
+
+    const response = await axios.post(
+      `${base_url}/user/logout`,
+      bodyParameters,
+      config
+    );
+    return response;
+  };
+  return { userRegister, userLogin, userLogout };
 });

@@ -1,11 +1,9 @@
 <script setup>
-  import { RouterLink, RouterView } from "vue-router";
-  
-  </script>
-  
-  <template>
+import { RouterLink, RouterView } from "vue-router";
+</script>
+
+<template>
+  <div class="container mx-auto">
     <router-view></router-view>
-  </template>
-  
-  
-  
+  </div>
+</template>
