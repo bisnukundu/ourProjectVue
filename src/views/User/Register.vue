@@ -5,7 +5,7 @@ import { useRouter, useRoute } from "vue-router";
 import Logo from "../../assets/img/logo.png";
 import { useUserStore } from "../../stores/User/User.js";
 import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength, sameAs } from "@vuelidate/validators";
+import { required, email, minLength, sameAs, maxLength } from "@vuelidate/validators";
 import ErrorMessage from "../../components/ErrorMessage.vue";
 
 const userStore = useUserStore();
@@ -27,7 +27,7 @@ const RegisterData = reactive({
 let ruels = {
   full_name: { required },
   email: { required },
-  phone: { required },
+  phone: { required, minLength: minLength(11),maxLength: maxLength(11) },
   sponserId: { required },
   password: { required, minLength: minLength(6) },
   password_confirmation: {
@@ -42,7 +42,6 @@ const submitRegister = async () => {
   let validate = await v$.value.$validate();
   if (validate) {
     const userRegister = await userStore.userRegister(RegisterData);
-
     if (userRegister.status === 200 && userRegister.data.status == "pass") {
       Swal.fire({
         title: "অভিনন্দন!",
@@ -53,7 +52,7 @@ const submitRegister = async () => {
     } else {
       Swal.fire({
         title: "Error",
-        text: "আপনার SponserID সঠিক নয়!",
+        text: userRegister.data.message,
         icon: "error",
       });
     }
@@ -112,7 +111,7 @@ const submitRegister = async () => {
           <error-message
             v-if="v$.phone.$error"
             fild="phone"
-            msg="দয়া করে আপনার ফোন নাম্বার টি লিখুন"
+            msg="দয়া করে আপনার ফোন নাম্বার টি ১১ ডিজিটের লিখুন"
           />
           <input
             class="text-black rounded-md block w-full"
