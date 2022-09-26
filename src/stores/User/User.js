@@ -1,8 +1,13 @@
 import axios from "axios";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 
 export const useUserStore = defineStore("user", function () {
   const base_url = "http://127.0.0.1:8000/api";
+  const user = ref();
+  const getUser = () => {
+    
+  };
   const userRegister = async (userData) => {
     try {
       const response = await axios.post(`${base_url}/user/register`, userData);

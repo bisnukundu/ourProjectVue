@@ -24,12 +24,14 @@ const login = async () => {
   const validate = v$.value.$validate();
   if (validate) {
     const user = await userStore.userLogin(loginData);
+
     if (user.data.status == "faild") {
       msg.value = "আপনার UserName অথবা Password ভুল হয়েছে";
       return;
     }
-    const token = user.data.plainTextToken;
+    const token = user.data[0].plainTextToken;
     localStorage.setItem("loginToken", token);
+    localStorage.setItem("userinfo", JSON.stringify(user.data[1]));
     router.push({ name: "user.dashboard" });
   }
 };

@@ -105,7 +105,7 @@ const submitRegister = async () => {
           />
           <input
             class="text-black rounded-md block w-full"
-            type="number"
+            type="tel"
             placeholder="Phone..."
             v-model="RegisterData.phone"
             @blur="v$.phone.$touch"

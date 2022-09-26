@@ -1,10 +1,12 @@
 <script setup>
+import { ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
+const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
 </script>
 
 <template>
   <Layout>
-    <div class="w-full border text-center mt-28">
+    <div class="w-full border text-center mt-28 rounded-md">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -23,16 +25,16 @@ import Layout from "../../components/Dashboard/Layout.vue";
       <!-- //Profile Details  -->
       <div class="space-y-3">
         <p class="bg-slate-800 py-2 rounded-md">
-          <b>FullName</b> : Bisnu kundu
+          <b>FullName</b> : {{userInfo.full_name}}
         </p>
         <p class="bg-slate-800 py-2 rounded-md">
-          <b>UserName</b> : bisnukundu14
+          <b>UserName</b> : {{userInfo.user_name}}
         </p>
         <p class="bg-slate-800 py-2 rounded-md">
-          <b>Email</b> : bisnukundu@gmail.com
+          <b>Email</b> : {{userInfo.email}}
         </p>
-        <p class="bg-slate-800 py-2 rounded-md"><b>Phone</b> : 0179883785</p>
-        <p class="bg-slate-800 py-2 rounded-md"><b>SponserID</b> : maruf</p>
+        <p class="bg-slate-800 py-2 rounded-md"><b>Phone</b> : {{userInfo.phone}}</p>
+        <p class="bg-slate-800 py-2 rounded-md"><b>SponserID</b> : {{userInfo.sponserId}}</p>
       </div>
     </div>
   </Layout>
