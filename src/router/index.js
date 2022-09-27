@@ -35,7 +35,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
-    
+    {
+      path: "/user/referral-friend",
+      name: "user.referral_friend",
+      component: () => import("../views/User/ReferralFriend.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 router.beforeEach((to, from) => {

@@ -1,6 +1,6 @@
 <script setup></script>
 <template>
-  <aside class="border h-screen w-60 bg-slate-800">
+  <aside class="border border-gray-700 h-screen w-60 bg-slate-800">
     <p class="italic font-bold text-slate-400 text-center mt-5">LOGO</p>
     <div
       class="text-slate-400 space-y-5 text-sm px-5 cursor-pointer py-3 rounded-md mt-5"
@@ -9,7 +9,7 @@
       <router-link
         class="flex rounded-md py-2 flex-row space-x-2 items-center"
         :to="{ name: 'user.dashboard' }"
-        active-class="border px-5 font-bold"
+        active-class="border border-gray-600 px-5 font-bold"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -30,12 +30,16 @@
       </router-link>
 
       <!-- //Referral Friend  -->
-      <div class="flex py-2 rounded-md flex-row space-x-2 items-center">
+      <router-link
+        class="flex rounded-md py-2 flex-row space-x-2 items-center"
+        :to="{ name: 'user.referral_friend' }"
+        active-class="border border-gray-600 px-5 font-bold"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="2.5"
+          stroke-width="1.5"
           stroke="currentColor"
           class="w-5 h-5"
         >
@@ -45,11 +49,8 @@
             d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
           />
         </svg>
-
-        <router-link to="/">
-          <span>Referral Friend</span>
-        </router-link>
-      </div>
+        <span>Referral Friend</span>
+      </router-link>
 
       <!-- //Level  -->
       <div class="flex flex-row space-x-2 items-center">

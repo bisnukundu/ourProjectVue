@@ -2,11 +2,20 @@
 import { ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
 const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
+
+const copyText = async (mytext) => {
+  try {
+    await navigator.clipboard.writeText(mytext);
+    alert("আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!");
+  } catch ($e) {
+    alert("Cannot copy");
+  }
+};
 </script>
 
 <template>
   <Layout>
-    <div class="w-full border py-4 text-center mt-28 rounded-md">
+    <div class="w-full border border-gray-600 py-4 text-center mt-28 rounded-md">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -39,7 +48,10 @@ const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
         <p class="bg-slate-800 py-2 px-5 rounded-md">
           <b>SponserID</b> : {{ userInfo.sponserId }}
         </p>
-        <p class="bg-slate-800 py-2  cursor-copy px-5 rounded-md">
+        <p
+          @click="copyText(userInfo.referral_link)"
+          class="bg-slate-800 py-2 cursor-pointer px-5 rounded-md"
+        >
           <b>Referral Link</b>: {{ userInfo.referral_link }}
         </p>
       </div>

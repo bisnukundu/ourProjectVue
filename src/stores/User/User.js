@@ -5,9 +5,7 @@ import { defineStore } from "pinia";
 export const useUserStore = defineStore("user", function () {
   const base_url = "http://127.0.0.1:8000/api";
   const user = ref();
-  const getUser = () => {
-    
-  };
+  const getUser = () => {};
   const userRegister = async (userData) => {
     try {
       const response = await axios.post(`${base_url}/user/register`, userData);
@@ -40,5 +38,18 @@ export const useUserStore = defineStore("user", function () {
     );
     return response;
   };
-  return { userRegister, userLogin, userLogout };
+
+  const referral_friend = async (userName, token) => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    const referral_users = await axios.get(
+      `${base_url}/user/referral_friend/${userName}`,
+      config
+    );
+    return referral_users.data;
+  };
+
+  return { userRegister, userLogin, userLogout, referral_friend };
 });

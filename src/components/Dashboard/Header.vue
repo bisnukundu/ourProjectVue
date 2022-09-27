@@ -14,7 +14,7 @@ const logout = async () => {
 };
 </script>
 <template>
-  <header class="border w-full bg-slate-800">
+  <header class="border border-gray-600 w-full bg-slate-800">
     <div class="w-20 ml-auto relative">
       <!-- //Profile Menu Button  -->
       <button @click="profileMenu = !profileMenu">
@@ -37,7 +37,7 @@ const logout = async () => {
       <!-- //DropDown Menu  -->
       <div
         v-show="profileMenu"
-        class="bg-slate-800 text-white border space-y-5 p-5 rounded-md absolute right-0"
+        class="bg-slate-800 text-white border-gray-600 border space-y-5 p-5 rounded-md absolute right-0"
       >
         <!-- //Profile  -->
         <div class="flex flex-row space-x-2 items-center">
