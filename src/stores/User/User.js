@@ -39,15 +39,16 @@ export const useUserStore = defineStore("user", function () {
     return response;
   };
 
-  const referral_friend = async (userName, token) => {
+  const referral_friend = async (userName, token, page=1) => {
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
 
     const referral_users = await axios.get(
-      `${base_url}/user/referral_friend/${userName}`,
+      `${base_url}/user/referral_friend/${userName}?page=${page}`,
       config
     );
+    console.log('%cUser.js line:51 page', 'color: #007acc;', page);
     return referral_users.data;
   };
 

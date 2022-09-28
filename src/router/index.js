@@ -4,6 +4,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: "/",
+      redirect: "/user/login",
+    },
+    {
       path: "/user/login",
       name: "user.login",
       component: () => import("../views/User/Login.vue"),
@@ -43,8 +47,17 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/user/level",
+      name: "user.level",
+      component: () => import("../views/User/Level.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
+
 router.beforeEach((to, from) => {
   let authCheck = to.meta.requiresAuth;
 
