@@ -155,11 +155,12 @@ const next_paginate = async (page) => {
       </tbody>
     </table>
 
-    <!-- <router-link :to="paginate_next">NEXT</router-link>   -->
-    <div class="flex justify-between w-full mt-2 mb-10">
+    
+    <div v-if="paginate_next != null || paginate_prev != null" class="flex justify-between w-full mt-2 mb-10">
       <!-- //Left BUtton  -->
       <template v-if="paginate_prev == null">
-        <button disabled
+        <button
+          disabled
           class="border p-3 py-2 rounded-md text-white opacity-20 border-red-800"
         >
           <svg
@@ -201,9 +202,12 @@ const next_paginate = async (page) => {
           />
         </svg>
       </button>
+
       <!-- //RIght button  -->
+
       <template v-if="paginate_next == null">
-        <button disabled
+        <button
+          disabled
           class="border p-3 py-2 rounded-md text-white opacity-20 border-red-800"
         >
           <svg
