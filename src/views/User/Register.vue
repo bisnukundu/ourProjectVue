@@ -13,7 +13,7 @@ const router = useRouter();
 const route = useRoute();
 let error = ref("");
 
-// just for testing
+// just for creating some dummy data
 let date = new Date();
 const RegisterData = reactive({
   full_name: "Bisnu kundu",
