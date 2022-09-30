@@ -13,7 +13,7 @@ const router = useRouter();
 const route = useRoute();
 let error = ref("");
 
-// just for creating some dummy data --Bisnu kundu
+// just for creating some dummy data git problem solve
 let date = new Date();
 const RegisterData = reactive({
   full_name: `Bisnu${data.getSeconds()} kundu`,
