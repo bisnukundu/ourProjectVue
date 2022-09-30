@@ -18,7 +18,7 @@ let date = new Date();
 const RegisterData = reactive({
   full_name: "Bisnu kundu",
   email: "bisnu" + date.getSeconds() + "@gmail.com",
-  phone: "0147797914",
+  phone: "01477979314",
   sponserId: route.query.sopnser ?? "",
   password: "password",
   password_confirmation: "password",

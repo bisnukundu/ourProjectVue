@@ -155,7 +155,7 @@ const next_paginate = async (page) => {
       </tbody>
     </table>
 
-    
+    <!-- Pagination  -->
     <div v-if="paginate_next != null || paginate_prev != null" class="flex justify-between w-full mt-2 mb-10">
       <!-- //Left BUtton  -->
       <template v-if="paginate_prev == null">
