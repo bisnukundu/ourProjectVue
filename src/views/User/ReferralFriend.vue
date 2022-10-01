@@ -4,6 +4,7 @@ import Layout from "../../components/Dashboard/Layout.vue";
 import { useUserStore } from "../../stores/User/User";
 import moment from "moment";
 import Loading from "../../components/Loading.vue";
+import { CheckIcon } from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
 const referrel_users = ref([]);
@@ -117,14 +118,13 @@ const next_paginate = async (page) => {
             </td>
             <td class="border-b border-slate-700 p-4 text-slate-400">
               <!-- Active   -->
+
               <svg
                 v-if="user.status"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="3.5"
                 stroke="currentColor"
-                class="w-6 h-6 text-green-700"
               >
                 <path
                   stroke-linecap="round"
@@ -156,7 +156,10 @@ const next_paginate = async (page) => {
     </table>
 
     <!-- Pagination  -->
-    <div v-if="paginate_next != null || paginate_prev != null" class="flex justify-between w-full mt-2 mb-10">
+    <div
+      v-if="paginate_next != null || paginate_prev != null"
+      class="flex justify-between w-full mt-2 mb-10"
+    >
       <!-- //Left BUtton  -->
       <template v-if="paginate_prev == null">
         <button
