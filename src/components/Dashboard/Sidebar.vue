@@ -4,12 +4,19 @@ import {
   LinkIcon,
   ChartBarIcon,
   UserGroupIcon,
+  XCircleIcon,
   CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
+const emit = defineEmits(["sidebar"]);
 </script>
 <template>
   <aside class="border border-gray-700 h-screen w-60 bg-slate-800">
-    <p class="italic font-bold text-slate-400 text-center mt-5">LOGO</p>
+    <div class="w-full text-right">
+      <button @click="$emit('sidebar')">
+        <x-circle-icon class="w-8 h-8 text-white inline-block text-right" />
+      </button>
+    </div>
+    <p class="italic font-bold text-slate-400 text-center ">LOGO</p>
     <div
       class="text-slate-400 space-y-5 text-sm px-5 cursor-pointer py-3 rounded-md mt-5"
     >

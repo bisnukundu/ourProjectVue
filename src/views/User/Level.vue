@@ -44,7 +44,10 @@ const level_complete = (arr = [], completeNumber) => {
             <!-- Active   -->
             <check-icon
               v-if="
-                level_complete(user_level['level_1'], user_level['level_1_complete'])
+                level_complete(
+                  user_level['level_1'],
+                  user_level['level_1_complete']
+                )
               "
               class="w-6 h-6 font-bold stroke-green-700 stroke-[3]"
             />

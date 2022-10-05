@@ -6,20 +6,21 @@ import { UserCircleIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 let profileMenu = ref(false);
 const userStore = useUserStore();
 const router = useRouter();
-
+const emit = defineEmits(["sidebar"]);
 const logout = async () => {
   let t = await userStore.userLogout();
   localStorage.removeItem("loginToken");
   localStorage.removeItem("userinfo");
   router.push({ name: "user.login" });
 };
+
 </script>
 <template>
   <header
     class="border grid-flow-col border-gray-600 w-full bg-slate-800 grid content-center"
   >
     <div class="w-20 place-self-start text-right block lg:hidden">
-      <button>
+      <button @click="$emit('sidebar')">
         <bars-3-icon class="w-10 h-10 text-white" />
       </button>
     </div>

@@ -1,20 +1,26 @@
 <script setup>
+import { ref } from "vue";
 import Header from "../../components/Dashboard/Header.vue";
 import Sidebar from "../../components/Dashboard/Sidebar.vue";
+const sidebar = ref(false);
+const sidebarToggle = () => {
+  sidebar.value = !sidebar.value;
+};
 </script>
 
 <template>
   <div class="grid grid-cols-12">
     <div class="col-span-full">
-      <Header />
+      <Header @sidebar="sidebarToggle" />
     </div>
     <div
-      class="hidden lg:block lg:col-span-2 absolute lg:static -left-full lg:left-0"
+      class="lg:block lg:col-span-2 absolute lg:static lg:left-0"
+      :class="[sidebar ? '' : 'hidden -left-full']"
     >
-      <Sidebar />
+      <Sidebar @sidebar="sidebarToggle"/>
     </div>
 
-    <div class="col-span-12 h-full lg:col-span-9 lg:pl-16 text-slate-400">
+    <div class="col-span-12 overflow-auto h-full lg:col-span-9 lg:pl-16 text-slate-400">
       <slot></slot>
     </div>
   </div>
