@@ -16,7 +16,7 @@ let error = ref("");
 // just for creating some dummy data git problem solve
 let date = new Date();
 const RegisterData = reactive({
-  full_name: `Bisnu${data.getSeconds()} kundu`,
+  full_name: `Bisnu${date.getSeconds()} kundu`,
   email: "bisnu" + date.getSeconds() + "@gmail.com",
   phone: "01477979314",
   sponserId: route.query.sopnser ?? "",

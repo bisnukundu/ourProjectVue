@@ -2,16 +2,10 @@
 import { ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
+import {UseCopyText} from '../../composable/UseCopyText.js'
 const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
 
-const copyText = async (mytext) => {
-  try {
-    await navigator.clipboard.writeText(mytext);
-    alert("আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!");
-  } catch ($e) {
-    alert("Cannot copy");
-  }
-};
+
 </script>
 
 <template>
@@ -39,7 +33,7 @@ const copyText = async (mytext) => {
           <b>SponserID</b> : {{ userInfo.sponserId }}
         </p>
         <p
-          @click="copyText(userInfo.referral_link)"
+          @click="UseCopyText(userInfo.referral_link,'আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!')"
           class="bg-slate-800 py-2 cursor-pointer px-5 rounded-md"
         >
           <b>Referral Link</b>: {{ userInfo.referral_link }}

@@ -8,7 +8,7 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const logout = async () => {
-  let t = await userStore.userLogout(localStorage.getItem("loginToken"));
+  let t = await userStore.userLogout();
   localStorage.removeItem("loginToken");
   localStorage.removeItem("userinfo");
   router.push({ name: "user.login" });

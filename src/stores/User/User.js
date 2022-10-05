@@ -1,9 +1,11 @@
 import axios from "axios";
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { UseConfig } from "../../composable/UseConfig";
 
 export const useUserStore = defineStore("user", function () {
-  const base_url = "http://127.0.0.1:8000/api";
+  const config = UseConfig();
+  const base_url = config.api_base_url;
   const user = ref();
   const getUser = () => {};
   const userRegister = async (userData) => {
@@ -22,9 +24,9 @@ export const useUserStore = defineStore("user", function () {
       return error.response;
     }
   };
-  const userLogout = async (token) => {
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
+  const userLogout = async () => {
+    const config_option = {
+      headers: { Authorization: `Bearer ${config.token}` },
     };
 
     const bodyParameters = {
@@ -34,19 +36,19 @@ export const useUserStore = defineStore("user", function () {
     const response = await axios.post(
       `${base_url}/user/logout`,
       bodyParameters,
-      config
+      config_option
     );
     return response;
   };
 
-  const referral_friend = async (userName, token, page = 1) => {
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
+  const referral_friend = async (userName, page = 1) => {
+    const config_option = {
+      headers: { Authorization: `Bearer ${config.token}` },
     };
 
     const referral_users = await axios.get(
       `${base_url}/user/referral_friend/${userName}?page=${page}`,
-      config
+      config_option
     );
     return referral_users.data;
   };

@@ -4,7 +4,7 @@ import Layout from "../../components/Dashboard/Layout.vue";
 import { useUserStore } from "../../stores/User/User";
 import moment from "moment";
 import Loading from "../../components/Loading.vue";
-import { CheckIcon } from "@heroicons/vue/24/outline";
+import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 const userStore = useUserStore();
 const referrel_users = ref([]);
@@ -14,12 +14,8 @@ const paginate_prev = ref();
 let msg = ref("");
 
 const userInfo = JSON.parse(localStorage.getItem("userinfo"));
-const loginToken = localStorage.getItem("loginToken");
 onMounted(async () => {
-  const response = await userStore.referral_friend(
-    userInfo.user_name,
-    loginToken
-  );
+  const response = await userStore.referral_friend(userInfo.user_name);
 
   if (response.status !== "faild") {
     referrel_users.value = response.data.data;
@@ -36,11 +32,7 @@ onMounted(async () => {
   }
 });
 const next_paginate = async (page) => {
-  const response = await userStore.referral_friend(
-    userInfo.user_name,
-    loginToken,
-    page
-  );
+  const response = await userStore.referral_friend(userInfo.user_name, page);
 
   if (response.status !== "faild") {
     referrel_users.value = response.data.data;
@@ -118,37 +110,16 @@ const next_paginate = async (page) => {
             </td>
             <td class="border-b border-slate-700 p-4 text-slate-400">
               <!-- Active   -->
-
-              <svg
+              <check-icon
                 v-if="user.status"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M4.5 12.75l6 6 9-13.5"
-                />
-              </svg>
+                class="w-6 h-6 font-bold stroke-green-700 stroke-[3]"
+              />
 
               <!-- InActive  -->
-              <svg
+              <x-mark-icon
                 v-else
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="3.5"
-                stroke="currentColor"
-                class="w-6 h-6 text-red-700 font-bold"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+                class="w-6 h-6 font-bold stroke-red-700 stroke-[3]"
+              />
             </td>
           </tr>
         </template>

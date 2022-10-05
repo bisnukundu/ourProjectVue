@@ -1,74 +1,60 @@
 <script setup>
+import { onMounted, ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
+import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { useUserLevelStore } from "../../stores/User/UserLevel";
+import Td from "../../components/table/Td.vue";
+import Th from "../../components/table/Th.vue";
+const level = useUserLevelStore();
+const user_level = ref([]);
+onMounted(async () => {
+  const level_data = await level.userLevel();
+  user_level.value = level_data.data;
+});
+
+const level_number = (arr = []) => {
+  return arr.length;
+};
+const level_complete = (arr = [], completeNumber) => {
+  return arr.length >= completeNumber;
+};
 </script>
 <template>
   <Layout>
     <table class="border-collapse table-auto w-full text-sm mt-10">
       <thead>
         <tr>
-          <th
-            class="border border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-200 text-left"
-          >
-            লেভেল
-          </th>
-          <th
-            class="border border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-200 text-left"
-          >
-            সর্বনিম্ন মেম্বার
-          </th>
-          <th
-            class="border border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-200 text-left"
-          >
-            বর্তমান মেম্বার
-          </th>
-          <th
-            class="border border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-200 text-left"
-          >
-            বোনাস
-          </th>
-          <th
-            class="border border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-200 text-left"
-          >
-            বেতন
-          </th>
-          <th
-            class="border border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-200 text-left"
-          >
-            তারিখ
-          </th>
-          <th
-            class="border border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-200 text-left"
-          >
-            কমপ্লিট
-          </th>
+          <Th>লেভেল</Th>
+          <Th>সর্বনিম্ন মেম্বার</Th>
+          <Th>বর্তমান মেম্বার</Th>
+          <Th> বোনাস</Th>
+          <Th>বেতন</Th>
+          <Th>তারিখ</Th>
+          <Th>কমপ্লিট</Th>
         </tr>
       </thead>
       <tbody class="bg-slate-800">
         <tr>
-          <td class="border-b border-slate-700 p-4 text-slate-400">লেভেল-১</td>
-          <td class="border-b border-slate-700 p-4 text-slate-400">২০ জন</td>
-          <td class="border-b border-slate-700 p-4 text-slate-400">১ জন</td>
-          <td class="border-b border-slate-700 p-4 text-slate-400">0</td>
-          <td class="border-b border-slate-700 p-4 text-slate-400">0</td>
-          <td class="border-b border-slate-700 p-4 text-slate-400">
-            20-3-2022
-          </td>
-          <td class="border-b border-slate-700 p-4 text-slate-400">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="3.5"
-              stroke="currentColor"
-              class="w-6 h-6 text-green-700"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4.5 12.75l6 6 9-13.5"
-              />
-            </svg>
-          </td>
+          <Td>লেভেল-১</Td>
+          <Td>২০ জন</Td>
+          <Td>{{ level_number(user_level["level_1"]) }}</Td>
+          <Td>0</Td>
+          <Td>0</Td>
+          <Td>20-3-2022</Td>
+
+          <Td>
+            <!-- Active   -->
+            <check-icon
+              v-if="level_complete(user_level['level_1'], 20)"
+              class="w-6 h-6 font-bold stroke-green-700 stroke-[3]"
+            />
+
+            <!-- InActive  -->
+            <x-mark-icon
+              v-else
+              class="w-6 h-6 font-bold stroke-red-700 stroke-[3]"
+            />
+          </Td>
         </tr>
       </tbody>
     </table>
