@@ -2,21 +2,23 @@
 import { ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
-import {UseCopyText} from '../../composable/UseCopyText.js'
+import { UseCopyText } from "../../composable/UseCopyText.js";
 const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
-
-
 </script>
 
 <template>
   <Layout>
-    <div
-      class="w-full border border-gray-600 py-4 text-center mt-28 rounded-md"
-    >
-      <user-circle-icon class="w-16 block mx-auto mb-2" />
+    <div class="w-full text-center mt-28 rounded-md border border-dashed py-5">
+      <user-circle-icon
+        :class="[userInfo.status ? 'stroke-green-700' : 'stroke-red-700']"
+        class="w-16 block mx-auto mb-2"
+      />
 
       <!-- //Profile Details  -->
       <div class="space-y-3 text-left inline-block">
+        <p class="bg-slate-800 py-2 px-5 rounded-md">
+          <b>Your Account</b> : {{ userInfo.status ? "Active" : "InActive" }}
+        </p>
         <p class="bg-slate-800 py-2 px-5 rounded-md">
           <b>FullName</b> : {{ userInfo.full_name }}
         </p>
@@ -33,7 +35,12 @@ const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
           <b>SponserID</b> : {{ userInfo.sponserId }}
         </p>
         <p
-          @click="UseCopyText(userInfo.referral_link,'আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!')"
+          @click="
+            UseCopyText(
+              userInfo.referral_link,
+              'আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!'
+            )
+          "
           class="bg-slate-800 py-2 cursor-pointer px-5 rounded-md"
         >
           <b>Referral Link</b>: {{ userInfo.referral_link }}

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/User/User";
-import { UserCircleIcon } from "@heroicons/vue/24/outline";
+import { UserCircleIcon, Bars3Icon } from "@heroicons/vue/24/outline";
 let profileMenu = ref(false);
 const userStore = useUserStore();
 const router = useRouter();
@@ -15,8 +15,15 @@ const logout = async () => {
 };
 </script>
 <template>
-  <header class="border border-gray-600 w-full bg-slate-800">
-    <div class="w-20 ml-auto relative">
+  <header
+    class="border grid-flow-col border-gray-600 w-full bg-slate-800 grid content-center"
+  >
+    <div class="w-20 place-self-start text-right block lg:hidden">
+      <button>
+        <bars-3-icon class="w-10 h-10 text-white" />
+      </button>
+    </div>
+    <div class="w-20 relative place-self-end">
       <!-- //Profile Menu Button  -->
       <button @click="profileMenu = !profileMenu">
         <user-circle-icon class="w-10 h-10 text-white" />

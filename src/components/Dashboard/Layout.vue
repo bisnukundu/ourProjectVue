@@ -8,11 +8,13 @@ import Sidebar from "../../components/Dashboard/Sidebar.vue";
     <div class="col-span-full">
       <Header />
     </div>
-    <div class="col-span-2">
+    <div
+      class="hidden lg:block lg:col-span-2 absolute lg:static -left-full lg:left-0"
+    >
       <Sidebar />
     </div>
 
-    <div class="col-span-9 pl-16 text-slate-400">
+    <div class="col-span-12 h-full lg:col-span-9 lg:pl-16 text-slate-400">
       <slot></slot>
     </div>
   </div>
