@@ -14,6 +14,7 @@ export const useUserLevelStore = () => {
       `${config.api_base_url}/user/level`,
       config_option
     );
+    console.log(response)
     return response;
   };
   return { userLevel };
