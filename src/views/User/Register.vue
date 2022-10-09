@@ -5,7 +5,13 @@ import { useRouter, useRoute } from "vue-router";
 import Logo from "../../assets/img/logo.png";
 import { useUserStore } from "../../stores/User/User.js";
 import { useVuelidate } from "@vuelidate/core";
-import { required, email, minLength, sameAs, maxLength } from "@vuelidate/validators";
+import {
+  required,
+  email,
+  minLength,
+  sameAs,
+  maxLength,
+} from "@vuelidate/validators";
 import ErrorMessage from "../../components/ErrorMessage.vue";
 
 const userStore = useUserStore();
@@ -27,7 +33,7 @@ const RegisterData = reactive({
 let ruels = {
   full_name: { required },
   email: { required },
-  phone: { required, minLength: minLength(11),maxLength: maxLength(11) },
+  phone: { required, minLength: minLength(11), maxLength: maxLength(11) },
   sponserId: { required },
   password: { required, minLength: minLength(6) },
   password_confirmation: {

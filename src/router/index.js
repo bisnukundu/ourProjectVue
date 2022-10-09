@@ -16,6 +16,14 @@ const router = createRouter({
       },
     },
     {
+      path: "/admin/login",
+      name: "admin.login",
+      component: () => import("../views/Admin/Login.vue"),
+      meta: {
+        requiresAuth: false,
+      },
+    },
+    {
       path: "/user/register",
       name: "user.register",
       component: () => import("../views/User/Register.vue"),
@@ -53,6 +61,15 @@ const router = createRouter({
       component: () => import("../views/User/Level.vue"),
       meta: {
         requiresAuth: true,
+      },
+    },
+    {
+      path: "/admin/all-user",
+      name: "admin.allUser",
+      component: () => import("../views/Admin/AllUser.vue"),
+      meta: {
+        requiresAuth: true,
+        admin: true,
       },
     },
   ],

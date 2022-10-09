@@ -49,6 +49,7 @@ const next_paginate = async (page) => {
     msg.value = "আপনার রেফারেল বন্ধু খুজে পাওয়া যাইনি!";
   }
 };
+
 </script>
 <template>
   <Layout>
