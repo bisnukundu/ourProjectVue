@@ -1,9 +1,10 @@
 import axios from "axios";
+import AxiosToken from "../../axios/AxiosToken";
 import { defineStore } from "pinia";
-import { UseConfig } from "../../composable/UseConfig";
+import { useConfig } from "../Config";
 
 export const useAdminStore = defineStore("admin", function () {
-  const config = UseConfig();
+  const config = useConfig();
   const base_url = config.api_base_url;
   const AdminLogin = async (loginData) => {
     try {
@@ -13,5 +14,12 @@ export const useAdminStore = defineStore("admin", function () {
       return error.response;
     }
   };
-  return { AdminLogin };
+
+  const getAllUser = async () => {
+    const allUser = await AxiosToken.get(
+      `${config.api_base_url}/admin/all-user`
+    );
+    return allUser.data;
+  };
+  return { AdminLogin, getAllUser };
 });

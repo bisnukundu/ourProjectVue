@@ -7,9 +7,9 @@ import {
   XCircleIcon,
   CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
-import { UseConfig } from "../../composable/UseConfig";
-const emit = defineEmits(["sidebar"]);
-const { userInfo } = UseConfig();
+import { useConfig } from "../../stores/Config";
+
+const { USER_INFO: userInfo } = useConfig();
 </script>
 <template>
   <aside class="border border-gray-700 h-screen w-60 bg-slate-800">
@@ -31,20 +31,21 @@ const { userInfo } = UseConfig();
         <home-icon class="w-5 h-5" />
         <span>Dashboard</span>
       </router-link>
-
-      <!-- //All Users    -->
-      <router-link
-        v-if="userInfo.admin"
-        class="flex rounded-md py-2 flex-row space-x-2 items-center"
-        :to="{ name: 'admin.allUser' }"
-        active-class="border border-gray-600 px-5 font-bold"
-      >
-        <user-group-icon class="w-5 h-5" />
-        <span>All Users</span>
-      </router-link>
+      <!-- admin menu  -->
+      <template v-if="userInfo?.admin">
+        <!-- //All Users    -->
+        <router-link
+          class="flex rounded-md py-2 flex-row space-x-2 items-center"
+          :to="{ name: 'admin.allUser' }"
+          active-class="border border-gray-600 px-5 font-bold"
+        >
+          <user-group-icon class="w-5 h-5" />
+          <span>All Users</span>
+        </router-link>
+      </template>
 
       <!-- //Users Menu  -->
-      <template v-if="!userInfo.admin">
+      <template v-if="!userInfo?.admin">
         <!-- //Referral Friend  -->
         <router-link
           class="flex rounded-md py-2 flex-row space-x-2 items-center"

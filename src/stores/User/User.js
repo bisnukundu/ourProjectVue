@@ -1,16 +1,13 @@
 import axios from "axios";
+import AxiosToken from "../../axios/AxiosToken";
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { UseConfig } from "../../composable/UseConfig";
+import { useConfig } from "../../stores/Config";
 
 export const useUserStore = defineStore("user", function () {
-  const config = UseConfig();
-  const base_url = config.api_base_url;
-  const user = ref();
-  const getUser = () => {};
   const userRegister = async (userData) => {
     try {
-      const response = await axios.post(`${base_url}/user/register`, userData);
+      const response = await axios.post(`/user/register`, userData);
       return response;
     } catch (error) {
       return error.response;
@@ -18,38 +15,22 @@ export const useUserStore = defineStore("user", function () {
   };
   const userLogin = async (loginData) => {
     try {
-      const response = await axios.post(`${base_url}/user/login`, loginData);
+      const response = await axios.post(`/user/login`, loginData);
       return response;
     } catch (error) {
       return error.response;
     }
   };
   const userLogout = async () => {
-    const config_option = {
-      headers: { Authorization: `Bearer ${config.token}` },
-    };
-
-    const bodyParameters = {
-      key: "value",
-    };
-
-    const response = await axios.post(
-      `${base_url}/user/logout`,
-      bodyParameters,
-      config_option
-    );
+    const response = await AxiosToken.post(`/user/logout`);
     return response;
   };
 
   const referral_friend = async (userName, page = 1) => {
-    const config_option = {
-      headers: { Authorization: `Bearer ${config.token}` },
-    };
-
-    const referral_users = await axios.get(
-      `${base_url}/user/referral_friend/${userName}?page=${page}`,
-      config_option
+    const referral_users = await AxiosToken.get(
+      `/user/referral_friend/${userName}?page=${page}`
     );
+
     return referral_users.data;
   };
 

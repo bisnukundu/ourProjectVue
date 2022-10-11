@@ -5,7 +5,9 @@ import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useUserLevelStore } from "../../stores/User/UserLevel";
 import Td from "../../components/table/Td.vue";
 import Th from "../../components/table/Th.vue";
+
 const level = useUserLevelStore();
+
 const user_level = ref([]);
 onMounted(async () => {
   const level_data = await level.userLevel();

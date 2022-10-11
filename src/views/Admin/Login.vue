@@ -5,7 +5,8 @@ import Logo from "../../assets/img/logo.png";
 import { useVuelidate } from "@vuelidate/core";
 import { useRouter } from "vue-router";
 import { minLength, required } from "@vuelidate/validators";
-import { useAdminStore } from "../../stores/User/Admin";
+import { useAdminStore } from "../../stores/Admins/Admin";
+
 const loginData = reactive({
   user_name: "",
   password: "password",

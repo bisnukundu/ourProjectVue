@@ -5,6 +5,7 @@ import { useUserStore } from "../../stores/User/User.js";
 import { useVuelidate } from "@vuelidate/core";
 import { useRouter } from "vue-router";
 import { minLength, required } from "@vuelidate/validators";
+
 const loginData = reactive({
   user_name: "",
   password: "password",

@@ -3,17 +3,17 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/User/User";
 import { UserCircleIcon, Bars3Icon } from "@heroicons/vue/24/outline";
+
 let profileMenu = ref(false);
 const userStore = useUserStore();
 const router = useRouter();
-const emit = defineEmits(["sidebar"]);
+
 const logout = async () => {
-  let t = await userStore.userLogout();
+  let tt = await userStore.userLogout();
   localStorage.removeItem("loginToken");
   localStorage.removeItem("userinfo");
   router.push({ name: "user.login" });
 };
-
 </script>
 <template>
   <header
