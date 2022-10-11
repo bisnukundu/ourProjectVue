@@ -9,7 +9,8 @@ import {
 } from "@heroicons/vue/24/outline";
 import { useConfig } from "../../stores/Config";
 
-const { USER_INFO: userInfo } = useConfig();
+const config = useConfig();
+const userInfo = config.getUserInfo();
 </script>
 <template>
   <aside class="border border-gray-700 h-screen w-60 bg-slate-800">

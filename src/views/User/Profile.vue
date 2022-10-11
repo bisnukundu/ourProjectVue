@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
 import { UseCopyText } from "../../composable/UseCopyText.js";
-const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
+import { useConfig } from "../../stores/Config";
+const config = useConfig();
+
+const userInfo = config.getUserInfo();
 </script>
 
 <template>
@@ -14,7 +16,6 @@ const userInfo = ref(JSON.parse(localStorage.getItem("userinfo")));
         class="w-16 block mx-auto mb-2"
       />
 
-      <!-- //Profile Details  -->
       <div class="space-y-3 text-left inline-block">
         <p class="bg-slate-800 py-2 px-5 rounded-md">
           <b>Your Account</b> : {{ userInfo.status ? "Active" : "InActive" }}

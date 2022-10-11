@@ -5,10 +5,10 @@ import { useConfig } from "../Config";
 
 export const useAdminStore = defineStore("admin", function () {
   const config = useConfig();
-  const base_url = config.api_base_url;
+
   const AdminLogin = async (loginData) => {
     try {
-      const response = await axios.post(`${base_url}/admin/login`, loginData);
+      const response = await axios.post(`/admin/login`, loginData);
       return response;
     } catch (error) {
       return error.response;
@@ -16,10 +16,8 @@ export const useAdminStore = defineStore("admin", function () {
   };
 
   const getAllUser = async () => {
-    const allUser = await AxiosToken.get(
-      `${config.api_base_url}/admin/all-user`
-    );
-    return allUser.data;
+    const allUser = await AxiosToken.get(`/admin/all-user`);
+    return allUser;
   };
   return { AdminLogin, getAllUser };
 });
