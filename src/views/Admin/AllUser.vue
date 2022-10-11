@@ -6,17 +6,15 @@ import { TrashIcon, CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { onMounted, ref } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import Loading from "../../components/Loading.vue";
+import Pagination from "../../components/table/Pagination.vue";
 const searchUser = ref("");
 const { getAllUser } = useAdminStore();
 const allUser = ref([]);
 const paginate_next = ref();
 const paginate_prev = ref();
 let msg = ref("");
-onMounted(async () => {
-  const response = await getAllUser();
 
-  console.log(response);
-
+const dataProcess = (response) => {
   if (response.status !== "faild") {
     allUser.value = response.data.data;
     paginate_next.value =
@@ -28,9 +26,19 @@ onMounted(async () => {
         ? null
         : response.data.prev_page_url.split("=")[1];
   } else {
-    msg.value = "আপনার রেফারেল বন্ধু খুজে পাওয়া যাইনি!";
+    msg.value = "ইউজার খুজে পাওয়া যাইনি!";
   }
+};
+
+onMounted(async () => {
+  const response = await getAllUser();
+  dataProcess(response);
 });
+
+const paginate_controll = async (page) => {
+  const response = await getAllUser(page);
+  dataProcess(response);
+};
 </script>
 
 <template>
@@ -77,6 +85,12 @@ onMounted(async () => {
           </template>
         </tbody>
       </table>
+      <!-- Pagination  -->
+      <Pagination
+        :paginate_next="paginate_next"
+        :paginate_prev="paginate_prev"
+        :controll="paginate_controll"
+      />
     </div>
   </Layout>
 </template>

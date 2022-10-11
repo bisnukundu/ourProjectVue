@@ -5,49 +5,43 @@ import { useUserStore } from "../../stores/User/User";
 import moment from "moment";
 import Loading from "../../components/Loading.vue";
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import Pagination from "../../components/table/Pagination.vue";
+import { useConfig } from "../../stores/Config";
 
 const userStore = useUserStore();
+const config = useConfig();
 const referrel_users = ref([]);
 const paginate_next = ref();
 const paginate_prev = ref();
 
 let msg = ref("");
 
-const userInfo = JSON.parse(localStorage.getItem("userinfo"));
+const userInfo = config.getUserInfo();
+
+const dataProcess = (response) => {
+  if (response.status !== "faild") {
+    referrel_users.value = response.data.data;
+    paginate_next.value =
+      response.data.next_page_url == null
+        ? null
+        : response.data.next_page_url.split("=")[1];
+    paginate_prev.value =
+      response.data.prev_page_url == null
+        ? null
+        : response.data.prev_page_url.split("=")[1];
+  } else {
+    msg.value = "আপনার রেফারেল বন্ধু খুজে পাওয়া যাইনি!";
+  }
+};
+
 onMounted(async () => {
   const response = await userStore.referral_friend(userInfo.user_name);
-
-  if (response.status !== "faild") {
-    referrel_users.value = response.data.data;
-    paginate_next.value =
-      response.data.next_page_url == null
-        ? null
-        : response.data.next_page_url.split("=")[1];
-    paginate_prev.value =
-      response.data.prev_page_url == null
-        ? null
-        : response.data.prev_page_url.split("=")[1];
-  } else {
-    msg.value = "আপনার রেফারেল বন্ধু খুজে পাওয়া যাইনি!";
-  }
+  dataProcess(response);
 });
-const next_paginate = async (page) => {
+
+const paginate_controll = async (page) => {
   const response = await userStore.referral_friend(userInfo.user_name, page);
-
-  if (response.status !== "faild") {
-    referrel_users.value = response.data.data;
-
-    paginate_next.value =
-      response.data.next_page_url == null
-        ? null
-        : response.data.next_page_url.split("=")[1];
-    paginate_prev.value =
-      response.data.prev_page_url == null
-        ? null
-        : response.data.prev_page_url.split("=")[1];
-  } else {
-    msg.value = "আপনার রেফারেল বন্ধু খুজে পাওয়া যাইনি!";
-  }
+  dataProcess(response);
 };
 </script>
 <template>
@@ -92,7 +86,7 @@ const next_paginate = async (page) => {
           </tr>
         </template>
         <template v-else>
-          <tr v-for="user in referrel_users" :key="user.id">
+          <tr v-for="(user, index) in referrel_users" :key="user.id">
             <td class="border-b border-slate-700 p-4 pl-8 text-slate-400">
               {{ user.id }}
             </td>
@@ -127,100 +121,10 @@ const next_paginate = async (page) => {
     </table>
 
     <!-- Pagination  -->
-    <div
-      v-if="paginate_next != null || paginate_prev != null"
-      class="flex justify-between w-full mt-2 mb-10"
-    >
-      <!-- //Left BUtton  -->
-      <template v-if="paginate_prev == null">
-        <button
-          disabled
-          class="border p-3 py-2 rounded-md text-white opacity-20 border-red-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="3.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-            />
-          </svg>
-        </button>
-      </template>
-      <button
-        v-else
-        :class="[
-          paginate_prev == null ? 'opacity-20  border-red-800 disabled' : '',
-        ]"
-        @click="next_paginate(paginate_prev)"
-        class="border p-3 py-2 border-gray-600 rounded-md text-white"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="3.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-          />
-        </svg>
-      </button>
-
-      <!-- //RIght button  -->
-
-      <template v-if="paginate_next == null">
-        <button
-          disabled
-          class="border p-3 py-2 rounded-md text-white opacity-20 border-red-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="3.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-            />
-          </svg>
-        </button>
-      </template>
-      <button
-        v-else
-        :class="[paginate_next == null ? 'opacity-20  border-red-800' : '']"
-        @click="next_paginate(paginate_next)"
-        class="border p-3 py-2 border-gray-600 rounded-md text-white"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="3.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-          />
-        </svg>
-      </button>
-    </div>
+    <Pagination
+      :paginate_next="paginate_next"
+      :paginate_prev="paginate_prev"
+      :controll="paginate_controll"
+    />
   </Layout>
 </template>

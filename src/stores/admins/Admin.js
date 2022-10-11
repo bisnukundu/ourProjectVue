@@ -15,8 +15,8 @@ export const useAdminStore = defineStore("admin", function () {
     }
   };
 
-  const getAllUser = async () => {
-    const allUser = await AxiosToken.get(`/admin/all-user`);
+  const getAllUser = async (page = 1) => {
+    const allUser = await AxiosToken.get(`/admin/all-user?page=${page}`);
     return allUser;
   };
   return { AdminLogin, getAllUser };
