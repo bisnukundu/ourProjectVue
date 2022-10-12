@@ -3,7 +3,7 @@ import Layout from "../../components/Dashboard/Layout.vue";
 import Th from "../../components/table/Th.vue";
 import Td from "../../components/table/Td.vue";
 import { TrashIcon, CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import Loading from "../../components/Loading.vue";
 import Pagination from "../../components/table/Pagination.vue";
@@ -13,6 +13,11 @@ const allUser = ref([]);
 const paginate_next = ref();
 const paginate_prev = ref();
 let msg = ref("");
+
+watch(searchUser, async () => {
+  const response = await getAllUser(1, searchUser.value);
+  dataProcess(response);
+});
 
 const dataProcess = (response) => {
   if (response.status !== "faild") {
@@ -48,7 +53,7 @@ const paginate_controll = async (page) => {
         type="text"
         placeholder="Search User.."
         class="inline-block rounded-md ml-auto bg-slate-800 mb-2"
-        v-model="searchUser"
+        v-model.lazy.trim="searchUser"
       />
 
       <table class="border-collapse text-left table-auto w-full text-sm">
