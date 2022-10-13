@@ -1,17 +1,19 @@
 <script setup>
 import Layout from "../../components/Dashboard/Layout.vue";
 import Th from "../../components/table/Th.vue";
-import Td from "../../components/table/Td.vue";
-import { TrashIcon, CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+
 import { onMounted, ref, watch } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import Loading from "../../components/Loading.vue";
 import Pagination from "../../components/table/Pagination.vue";
+
+import AllUserTr from "../../components/table/AllUserTr.vue";
 const searchUser = ref("");
 const { getAllUser } = useAdminStore();
 const allUser = ref([]);
 const paginate_next = ref();
 const paginate_prev = ref();
+
 let msg = ref("");
 
 watch(searchUser, async () => {
@@ -44,6 +46,7 @@ const paginate_controll = async (page) => {
   const response = await getAllUser(page);
   dataProcess(response);
 };
+
 </script>
 
 <template>
@@ -60,6 +63,7 @@ const paginate_controll = async (page) => {
         <thead>
           <Th>ID</Th>
           <Th>UserName</Th>
+          <Th>Status</Th>
           <Th>Action</Th>
         </thead>
         <tbody>
@@ -72,21 +76,9 @@ const paginate_controll = async (page) => {
             </tr>
           </template>
           <template v-else>
-            <tr v-for="(user, index) in allUser" :key="user.id">
-              <Td>{{ index + 1 }}</Td>
-              <Td>{{ user.user_name }}</Td>
-              <Td class="space-x-5">
-                <button class="cursor-pointer" title="Delete">
-                  <trash-icon class="w-5 h-5 stroke-2" />
-                </button>
-                <button class="cursor-pointer" title="Active">
-                  <check-icon class="w-5 h-5 stroke-2" />
-                </button>
-                <button class="cursor-pointer" title="DeActive">
-                  <x-mark-icon class="w-5 h-5 stroke-2" />
-                </button>
-              </Td>
-            </tr>
+            <template v-for="(user, index) in allUser" :key="user.id">
+              <AllUserTr :data="user" :index="index" />
+            </template>
           </template>
         </tbody>
       </table>

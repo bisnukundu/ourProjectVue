@@ -19,8 +19,23 @@ export const useAdminStore = defineStore("admin", function () {
     const allUser = await AxiosToken.get(
       `/admin/all-user/${searchName}/?page=${page}`
     );
-    console.log(searchName);
     return allUser.data;
   };
-  return { AdminLogin, getAllUser };
+
+  const activeUser = async (id = "") => {
+    const response = await AxiosToken.put(`/admin/active-user/${id}`);
+    return response.data;
+  };
+
+  const deactiveUser = async (id = "") => {
+    const response = await AxiosToken.put(`/admin/deactive-user/${id}`);
+    return response.data;
+  };
+
+  const deleteUser = async (id) => {
+    const response = await AxiosToken.delete(`/admin/delete-user/${id}`);
+    return response;
+  };
+
+  return { AdminLogin, getAllUser, activeUser, deactiveUser, deleteUser };
 });
