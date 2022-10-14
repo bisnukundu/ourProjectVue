@@ -31,16 +31,18 @@ const deactive = async (id) => {
 };
 const userDelete = async (id) => {
   if (window.confirm("Are you sure?")) {
+    deleteLoading.value = true;
     const response = await deleteUser(id);
-    user.value = props.data;
     userRow.value.remove();
-    console.log(userRow.value);
   }
 };
 </script>
 <template>
-  <tr ref="userRow">
-    <Td>{{ index + 1 }}</Td>
+  <tr
+    ref="userRow"
+    :class="[{ 'animate-pulse': deleteLoading }, { 'animate-pulse': loading }]"
+  >
+    <Td>{{ index }}</Td>
     <Td>{{ user.user_name }}</Td>
     <Td>
       <small
@@ -58,9 +60,10 @@ const userDelete = async (id) => {
         class="cursor-pointer"
         title="Delete"
         @click="userDelete(user.id)"
+        :disabled="deleteLoading"
       >
-        <LoadingIcon v-show="deleteLoading" />
         <trash-icon v-show="!deleteLoading" class="w-5 h-5 stroke-2" />
+        <LoadingIcon v-show="deleteLoading" />
       </button>
       <!-- Active button  -->
       <button
@@ -68,6 +71,7 @@ const userDelete = async (id) => {
         class="cursor-pointer"
         title="Active"
         @click="active(user.id)"
+        :disabled="loading"
       >
         <LoadingIcon v-show="loading" />
         <check-icon v-show="!loading" class="w-5 h-5 stroke-2" />
@@ -78,6 +82,7 @@ const userDelete = async (id) => {
         v-else
         :class="['cursor-pointer']"
         title="DeActive"
+        :disabled="loading"
       >
         <LoadingIcon v-show="loading" />
         <x-mark-icon v-show="!loading" class="w-5 h-5 stroke-2" />

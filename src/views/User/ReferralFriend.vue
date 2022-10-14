@@ -13,6 +13,8 @@ const config = useConfig();
 const referrel_users = ref([]);
 const paginate_next = ref();
 const paginate_prev = ref();
+const table_sl = ref();
+const paginateLoading = ref(false);
 
 let msg = ref("");
 
@@ -36,12 +38,16 @@ const dataProcess = (response) => {
 
 onMounted(async () => {
   const response = await userStore.referral_friend(userInfo.user_name);
+  table_sl.value = response.data.from;
   dataProcess(response);
 });
 
 const paginate_controll = async (page) => {
+  paginateLoading.value = true;
   const response = await userStore.referral_friend(userInfo.user_name, page);
+  table_sl.value = response.data.from;
   dataProcess(response);
+  paginateLoading.value = false;
 };
 </script>
 <template>
@@ -88,7 +94,7 @@ const paginate_controll = async (page) => {
         <template v-else>
           <tr v-for="(user, index) in referrel_users" :key="user.id">
             <td class="border-b border-slate-700 p-4 pl-8 text-slate-400">
-              {{ user.id }}
+              {{ table_sl + index }}
             </td>
             <td class="border-b border-slate-700 p-4 text-slate-400">
               {{ user.user_name }}
@@ -125,6 +131,7 @@ const paginate_controll = async (page) => {
       :paginate_next="paginate_next"
       :paginate_prev="paginate_prev"
       :controll="paginate_controll"
+      :loading="paginateLoading"
     />
   </Layout>
 </template>

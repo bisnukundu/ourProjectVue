@@ -6,14 +6,18 @@ import { onMounted, ref, watch } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import Loading from "../../components/Loading.vue";
 import Pagination from "../../components/table/Pagination.vue";
-
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 import AllUserTr from "../../components/table/AllUserTr.vue";
 const searchUser = ref("");
 const { getAllUser } = useAdminStore();
 const allUser = ref([]);
 const paginate_next = ref();
 const paginate_prev = ref();
-
+const table_sl = ref();
+const current_page = ref();
+const reloadCheck = ref(true);
+const timerCount = ref(5);
+const paginateLoading = ref(false);
 let msg = ref("");
 
 watch(searchUser, async () => {
@@ -39,25 +43,61 @@ const dataProcess = (response) => {
 
 onMounted(async () => {
   const response = await getAllUser();
+  table_sl.value = response.data.from;
+  current_page.value = response.data.current_page;
+  console.log(response);
   dataProcess(response);
 });
 
 const paginate_controll = async (page) => {
+  console.log("paginate next click");
+  paginateLoading.value = true;
   const response = await getAllUser(page);
+  table_sl.value = response.data.from;
+  current_page.value = response.data.current_page;
   dataProcess(response);
+  paginateLoading.value = false;
+  console.log("Click");
 };
 
+const reload = async () => {
+  if (reloadCheck.value) {
+    reloadCheck.value = false;
+
+    const response = await getAllUser(current_page.value);
+    table_sl.value = response.data.from;
+    current_page.value = response.data.current_page;
+    dataProcess(response);
+
+    setTimeout(() => {
+      reloadCheck.value = true;
+      timerCount.value = 5;
+      console.log("Timer END");
+      clearInterval(timerInterval);
+    }, 5000);
+
+    const timerInterval = setInterval(() => {
+      timerCount.value--;
+    }, 1000);
+  }
+};
 </script>
 
 <template>
   <Layout>
     <div class="mt-10 text-right">
-      <input
-        type="text"
-        placeholder="Search User.."
-        class="inline-block rounded-md ml-auto bg-slate-800 mb-2"
-        v-model.lazy.trim="searchUser"
-      />
+      <div class="space-x-5">
+        <b v-show="!reloadCheck">{{ timerCount }}</b>
+        <button @click="reload" v-show="reloadCheck">
+          <arrow-path-icon stroke-width="4" class="w-5 h-5 stroke-2" />
+        </button>
+        <input
+          type="text"
+          placeholder="Search User.."
+          class="inline-block rounded-md ml-auto bg-slate-800 mb-2"
+          v-model.lazy.trim="searchUser"
+        />
+      </div>
 
       <table class="border-collapse text-left table-auto w-full text-sm">
         <thead>
@@ -77,7 +117,7 @@ const paginate_controll = async (page) => {
           </template>
           <template v-else>
             <template v-for="(user, index) in allUser" :key="user.id">
-              <AllUserTr :data="user" :index="index" />
+              <AllUserTr :data="user" :index="table_sl + index" />
             </template>
           </template>
         </tbody>
@@ -87,6 +127,7 @@ const paginate_controll = async (page) => {
         :paginate_next="paginate_next"
         :paginate_prev="paginate_prev"
         :controll="paginate_controll"
+        :loading="paginateLoading"
       />
     </div>
   </Layout>
