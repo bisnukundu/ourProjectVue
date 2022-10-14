@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-
+import { useConfig } from "../composable/useConfig";
+const config = useConfig();
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -69,7 +70,6 @@ const router = createRouter({
       component: () => import("../views/Admin/AllUser.vue"),
       meta: {
         requiresAuth: true,
-        admin: true,
       },
     },
   ],
@@ -77,12 +77,21 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   let authCheck = to.meta.requiresAuth;
+  const user = config.getUserInfo();
 
+  // If not login then redirect to login page
   if (authCheck && !localStorage.getItem("loginToken")) {
     router.push({ name: "user.login" });
   }
+
+  // If user login then redirect to user dashboard
   if (authCheck == false && localStorage.getItem("loginToken")) {
     router.push({ name: "user.dashboard" });
+  }
+
+  //If not admin then redirect user dashboard
+  if (authCheck && to.name.includes("admin") && user?.admin === undefined) {
+    router.push({ name: "user.login" });
   }
 });
 

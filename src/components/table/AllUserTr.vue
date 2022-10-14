@@ -15,7 +15,6 @@ const userRow = ref();
 const active = async (id) => {
   if (window.confirm("Are you sure?")) {
     loading.value = true;
-    await activeUser(id);
     const response = await activeUser(id);
     user.value = response.data[0];
     loading.value = false;
@@ -68,14 +67,14 @@ const userDelete = async (id) => {
         v-if="!user.status"
         class="cursor-pointer"
         title="Active"
-        @click.once="active(user.id)"
+        @click="active(user.id)"
       >
         <LoadingIcon v-show="loading" />
         <check-icon v-show="!loading" class="w-5 h-5 stroke-2" />
       </button>
       <!-- Deactive button  -->
       <button
-        @click.once="deactive(user.id)"
+        @click="deactive(user.id)"
         v-else
         :class="['cursor-pointer']"
         title="DeActive"
