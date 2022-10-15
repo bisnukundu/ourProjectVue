@@ -13,6 +13,5 @@ const pinia = createPinia();
 app.use(pinia);
 app.use(router);
 app.mount("#app");
-
 const config = useConfig();
 axios.defaults.baseURL = config.API_URL;

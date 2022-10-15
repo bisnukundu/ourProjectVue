@@ -15,8 +15,10 @@
     "moment": "^2.29.4",
     "pinia": "^2.0.21",
     "sweetalert2": "^11.4.33",
+    "v-offline": "^3.2.1",
     "vue": "^3.2.38",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vue3-lottie": "^2.3.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",

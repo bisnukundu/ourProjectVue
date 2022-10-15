@@ -3,6 +3,6 @@ import Layout from "../../components/Dashboard/Layout.vue";
 </script>
 <template>
   <Layout>
-    <p>Balance page</p>
+    <h1>Balance</h1>
   </Layout>
 </template>

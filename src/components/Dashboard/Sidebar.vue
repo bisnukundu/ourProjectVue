@@ -76,12 +76,15 @@ const userInfo = config.getUserInfo();
         </div>
 
         <!-- //Balance  -->
-        <div class="flex flex-row space-x-2 items-center">
+
+        <router-link
+          class="flex rounded-md py-2 flex-row space-x-2 items-center"
+          :to="{ name: 'user.balance' }"
+          active-class="border border-gray-600 px-5 font-bold"
+        >
           <currency-dollar-icon class="w-5 h-5" />
-          <router-link to="/">
-            <span>Balance</span>
-          </router-link>
-        </div>
+          <span>Balance</span>
+        </router-link>
       </template>
     </div>
   </aside>

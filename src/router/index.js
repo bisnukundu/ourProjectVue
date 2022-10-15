@@ -72,6 +72,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/user/balance",
+      name: "user.balance",
+      component: () => import("../views/User/Balance.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 
