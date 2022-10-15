@@ -2,7 +2,7 @@ import axios from "axios";
 import AxiosToken from "../../axios/AxiosToken";
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { useConfig } from "../../stores/Config";
+import { useConfig } from "../../composable/useConfig";
 
 export const useUserStore = defineStore("user", function () {
   const userRegister = async (userData) => {

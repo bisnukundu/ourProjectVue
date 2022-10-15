@@ -80,6 +80,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/user/team/:level",
+      name: "user.team",
+      component: () => import("../views/User/Team.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 

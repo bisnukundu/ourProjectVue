@@ -1,7 +1,7 @@
 import axios from "axios";
 import AxiosToken from "../../axios/AxiosToken";
 import { defineStore } from "pinia";
-import { useConfig } from "../Config";
+import { useConfig } from "../../composable/useConfig";
 
 export const useAdminStore = defineStore("admin", function () {
   const config = useConfig();

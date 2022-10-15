@@ -7,7 +7,7 @@ import {
   XCircleIcon,
   CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
-import { useConfig } from "../../stores/Config";
+import { useConfig } from "../../composable/useConfig";
 
 const config = useConfig();
 const userInfo = config.getUserInfo();

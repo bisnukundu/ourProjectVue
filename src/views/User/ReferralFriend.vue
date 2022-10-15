@@ -6,7 +6,7 @@ import moment from "moment";
 import Loading from "../../components/Loading.vue";
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import Pagination from "../../components/table/Pagination.vue";
-import { useConfig } from "../../stores/Config";
+import { useConfig } from "../../composable/useConfig";
 
 const userStore = useUserStore();
 const config = useConfig();

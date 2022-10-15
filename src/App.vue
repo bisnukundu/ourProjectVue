@@ -20,11 +20,11 @@ const setConnected = (e) => {
       </template>
       <template v-if="!connected">
         <div class="h-screen relative">
-          <h1
+          <!-- <h1
             class="text-xl text-white z-10 font-extrabold text-center absolute block inset-y-16 w-full"
           >
             আপনার ইন্টারনেট সংযোগ বিছিন্ন হয়েছে, দয়া করে চেক করুন!
-          </h1>
+          </h1> -->
           <Vue3Lottie
             :animationData="OfflineAnimation"
             class="h-screen w-full"

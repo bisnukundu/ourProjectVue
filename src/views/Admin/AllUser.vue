@@ -45,19 +45,17 @@ onMounted(async () => {
   const response = await getAllUser();
   table_sl.value = response.data.from;
   current_page.value = response.data.current_page;
-  console.log(response);
+
   dataProcess(response);
 });
 
 const paginate_controll = async (page) => {
-  console.log("paginate next click");
   paginateLoading.value = true;
   const response = await getAllUser(page);
   table_sl.value = response.data.from;
   current_page.value = response.data.current_page;
   dataProcess(response);
   paginateLoading.value = false;
-  console.log("Click");
 };
 
 const reload = async () => {
@@ -72,7 +70,6 @@ const reload = async () => {
     setTimeout(() => {
       reloadCheck.value = true;
       timerCount.value = 5;
-      console.log("Timer END");
       clearInterval(timerInterval);
     }, 5000);
 

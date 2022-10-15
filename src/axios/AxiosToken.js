@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useConfig } from "../stores/Config";
+import { useConfig } from "../composable/useConfig";
 const config = useConfig();
 
 const instance = axios.create({

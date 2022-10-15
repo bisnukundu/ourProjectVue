@@ -1,6 +1,5 @@
-import axios from "axios";
 import AxiosToken from "../../axios/AxiosToken";
-import { ref } from "vue";
+
 import { defineStore } from "pinia";
 
 export const useUserLevelStore = defineStore("userLevel", function () {
@@ -8,5 +7,11 @@ export const useUserLevelStore = defineStore("userLevel", function () {
     const response = await AxiosToken.get(`/user/level`);
     return response;
   };
-  return { userLevel };
+
+  const getTeam = async () => {
+    const response = await AxiosToken.get(`/user/my-team`);
+    return response;
+  };
+
+  return { userLevel, getTeam };
 });
