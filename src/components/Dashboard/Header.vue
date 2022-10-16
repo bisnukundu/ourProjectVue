@@ -3,15 +3,21 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/User/User";
 import { UserCircleIcon, Bars3Icon } from "@heroicons/vue/24/outline";
+import ls from "localstorage-slim";
 
 let profileMenu = ref(false);
 const userStore = useUserStore();
 const router = useRouter();
 
+const loading = ref(false);
+
 const logout = async () => {
-  let tt = await userStore.userLogout();
+  loading.value = true;
+  await userStore.userLogout();
   localStorage.removeItem("loginToken");
   localStorage.removeItem("userinfo");
+  ls.remove("team");
+  loading.value = false;
   router.push({ name: "user.login" });
 };
 </script>
@@ -74,7 +80,7 @@ const logout = async () => {
             />
           </svg>
 
-          <button @click="logout">
+          <button @click="logout" :disabled="loading">
             <span>Logout</span>
           </button>
         </div>

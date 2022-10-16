@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useUserLevelStore } from "../../stores/User/UserLevel";
@@ -15,9 +15,13 @@ const reloadCheck = ref(true);
 const timerCount = ref(30);
 const teams = ref();
 onMounted(async () => {
-  const level_data = await level.userLevel();
-  user_level.value = level_data.data;
-  const getTeam = await level.getTeam();
+  if (localStorage.getItem("userLevel") == null) {
+    const level_data = await level.userLevel();
+    ls.set("userLevel", level_data.data);
+  }
+  user_level.value = ls.get("userLevel", {
+    decrypt: true,
+  });
 
   if (localStorage.getItem("team") == null) {
     const getTeam = await level.getTeam();
@@ -39,10 +43,8 @@ const reloadPage = async () => {
     reloadCheck.value = false;
 
     const level_data = await level.userLevel();
+    ls.set("userLevel", level_data.data);
     user_level.value = level_data.data;
-
-    const getTeam = await level.getTeam();
-    ls.set("team", getTeam.data);
 
     setTimeout(() => {
       reloadCheck.value = true;

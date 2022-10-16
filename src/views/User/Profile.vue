@@ -2,7 +2,7 @@
 import Layout from "../../components/Dashboard/Layout.vue";
 import { UserCircleIcon } from "@heroicons/vue/24/outline";
 import { UseCopyText } from "../../composable/UseCopyText.js";
-import { useConfig } from "../../stores/Config";
+import { useConfig } from "../../composable/useConfig.js";
 const config = useConfig();
 
 const userInfo = config.getUserInfo();
