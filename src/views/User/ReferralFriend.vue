@@ -7,6 +7,8 @@ import Loading from "../../components/Loading.vue";
 import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import Pagination from "../../components/table/Pagination.vue";
 import { useConfig } from "../../composable/useConfig";
+import PageReload from "../../components/PageReload.vue";
+import ls from "localstorage-slim";
 
 const userStore = useUserStore();
 const config = useConfig();
@@ -22,6 +24,7 @@ const userInfo = config.getUserInfo();
 
 const dataProcess = (response) => {
   if (response.status !== "faild") {
+    table_sl.value = response.data.from;
     referrel_users.value = response.data.data;
     paginate_next.value =
       response.data.next_page_url == null
@@ -37,22 +40,40 @@ const dataProcess = (response) => {
 };
 
 onMounted(async () => {
-  const response = await userStore.referral_friend(userInfo.user_name);
-  table_sl.value = response.data.from;
-  dataProcess(response);
+  if (localStorage.getItem("referral_friend") == null) {
+    const response = await userStore.referral_friend(userInfo.user_name);
+    ls.set("referral_friend", response);
+  }
+  const getResponseLocal = ls.get("referral_friend", {
+    decrypt: true,
+  });
+  dataProcess(getResponseLocal);
 });
 
 const paginate_controll = async (page) => {
   paginateLoading.value = true;
   const response = await userStore.referral_friend(userInfo.user_name, page);
-  table_sl.value = response.data.from;
+
   dataProcess(response);
   paginateLoading.value = false;
+};
+
+const reload = async () => {
+  const response = await userStore.referral_friend(userInfo.user_name);
+  ls.set("referral_friend", response);
+
+  const getResponseLocal = ls.get("referral_friend", {
+    decrypt: true,
+  });
+  dataProcess(getResponseLocal);
 };
 </script>
 <template>
   <Layout>
-    <table class="border-collapse table-auto w-full text-sm mt-10">
+    <div class="text-right mb-2 mt-10">
+      <PageReload :reload-fn="reload" />
+    </div>
+    <table class="border-collapse table-auto w-full text-sm">
       <thead>
         <tr>
           <th

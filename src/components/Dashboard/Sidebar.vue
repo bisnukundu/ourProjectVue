@@ -67,13 +67,7 @@ const userInfo = config.getUserInfo();
           <span>Level</span>
         </router-link>
 
-        <!-- //Team  -->
-        <div class="flex flex-row space-x-2 items-center">
-          <user-group-icon class="w-5 h-5" />
-          <router-link to="/">
-            <span>My Team</span>
-          </router-link>
-        </div>
+     
 
         <!-- //Balance  -->
 

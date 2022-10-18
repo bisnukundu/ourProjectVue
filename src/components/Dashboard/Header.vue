@@ -16,6 +16,7 @@ const logout = async () => {
   await userStore.userLogout();
   localStorage.removeItem("loginToken");
   localStorage.removeItem("userinfo");
+  localStorage.removeItem("userLevel");
   ls.remove("team");
   loading.value = false;
   router.push({ name: "user.login" });

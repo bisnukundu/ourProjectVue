@@ -5,14 +5,13 @@ import { CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { useUserLevelStore } from "../../stores/User/UserLevel";
 import Td from "../../components/table/Td.vue";
 import Th from "../../components/table/Th.vue";
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import PageReload from "../../components/PageReload.vue";
 
 import ls from "localstorage-slim";
 
 const level = useUserLevelStore();
 const user_level = ref([]);
-const reloadCheck = ref(true);
-const timerCount = ref(30);
+
 const teams = ref();
 onMounted(async () => {
   if (localStorage.getItem("userLevel") == null) {
@@ -39,37 +38,15 @@ const level_complete = (arr = [], completeNumber) => {
   return arr.length >= completeNumber;
 };
 const reloadPage = async () => {
-  if (reloadCheck.value) {
-    reloadCheck.value = false;
-
-    const level_data = await level.userLevel();
-    ls.set("userLevel", level_data.data);
-    user_level.value = level_data.data;
-
-    setTimeout(() => {
-      reloadCheck.value = true;
-      timerCount.value = 30;
-      clearInterval(timerInterval);
-    }, 30000);
-
-    const timerInterval = setInterval(() => {
-      timerCount.value--;
-    }, 1000);
-  }
+  const level_data = await level.userLevel();
+  ls.set("userLevel", level_data.data);
+  user_level.value = level_data.data;
 };
 </script>
 <template>
   <Layout>
-    <!-- <template v-if="teams">
-      <TeamShowTable :team="teams.level_1" />
-    </template> -->
-
     <div class="text-right mt-10 mb-2">
-      <!-- Reload Button  -->
-      <b v-show="!reloadCheck">{{ timerCount }}</b>
-      <button @click="reloadPage" v-show="reloadCheck">
-        <arrow-path-icon stroke-width="4" class="w-5 h-5 stroke-2" />
-      </button>
+      <PageReload :reloadFn="reloadPage" />
     </div>
     <table class="border-collapse table-auto w-full text-sm">
       <thead>
