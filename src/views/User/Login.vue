@@ -5,6 +5,7 @@ import { useUserStore } from "../../stores/User/User.js";
 import { useVuelidate } from "@vuelidate/core";
 import { useRouter } from "vue-router";
 import { minLength, required } from "@vuelidate/validators";
+import ls from "localstorage-slim";
 
 const loginData = reactive({
   user_name: "",
@@ -34,7 +35,7 @@ const login = async () => {
       console.log(user);
       const token = user.data[0].plainTextToken;
       localStorage.setItem("loginToken", token);
-      localStorage.setItem("userinfo", JSON.stringify(user.data[1]));
+      ls.set("userinfo", user.data[1]);
       router.push({ name: "user.dashboard" });
     }
   } catch (err) {

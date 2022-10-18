@@ -47,42 +47,49 @@ const reloadPage = async () => {
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_1' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-১</router-link
       >
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_2' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-২</router-link
       >
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_3' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-৩</router-link
       >
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_4' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-৪</router-link
       >
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_5' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-৫</router-link
       >
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_6' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-৬</router-link
       >
       <router-link
         class="border inline-block border-gray-500 px-3 py-1 rounded-md"
         :to="{ name: 'user.team', params: { level: 'level_7' } }"
+        activeClass="text-red-500 font-extrabold"
       >
         লেভেল-৭</router-link
       >

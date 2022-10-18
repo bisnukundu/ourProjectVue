@@ -44,7 +44,6 @@ onMounted(async () => {
   const response = await getAllUser();
   table_sl.value = response.data.from;
   current_page.value = response.data.current_page;
-
   dataProcess(response);
 });
 
@@ -67,9 +66,14 @@ const reload = async () => {
 
 <template>
   <Layout>
-    <div class="mt-10 text-right">
+    <div class="mt-10 text-right space-x-5">
       <PageReload :reload-fn="reload" />
-
+      <input
+        type="text"
+        placeholder="Search User.."
+        class="inline-block rounded-md ml-auto bg-slate-800 mb-2"
+        v-model.lazy.trim="searchUser"
+      />
       <table class="border-collapse text-left table-auto w-full text-sm">
         <thead>
           <Th>ID</Th>

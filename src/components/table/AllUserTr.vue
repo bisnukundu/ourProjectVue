@@ -1,28 +1,49 @@
 <script setup>
 import Td from "../../components/table/Td.vue";
-import { TrashIcon, CheckIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+  TrashIcon,
+  CheckIcon,
+  XMarkIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/vue/24/outline";
 
 import LoadingIcon from "../../components/LoadingIcon.vue";
 import { useAdminStore } from "../../stores/admins/Admin";
 import { ref } from "vue";
+import { useToast } from "../../composable/useToast.js";
 const props = defineProps(["data", "index"]);
-const { deactiveUser, activeUser, deleteUser } = useAdminStore();
+const { deactiveUser, activeUser, deleteUser, sendActiveBalance } =
+  useAdminStore();
 const loading = ref(false);
+const sendBalanceLoading = ref(false);
 const deleteLoading = ref(false);
 const user = ref(props.data);
 const userRow = ref();
 
 const active = async (id) => {
-  if (window.confirm("Are you sure?")) {
+  if (window.confirm("Do you want to Active account?")) {
     loading.value = true;
     const response = await activeUser(id);
-    user.value = response.data[0];
+
+    if (response.status == "pass") {
+      user.value = response.data[0];
+      useToast.fire({
+        title: response.message,
+        icon: "success",
+      });
+    }
+    if (response.status == "faild") {
+      useToast.fire({
+        title: "পর্যাপ্ত পরিমান ব্যালেন্স নেই",
+        icon: "error",
+      });
+    }
     loading.value = false;
   }
 };
 
 const deactive = async (id) => {
-  if (window.confirm("Are you sure?")) {
+  if (window.confirm("Do you want to Deactive account?")) {
     loading.value = true;
     const response = await deactiveUser(id);
     user.value = response.data[0];
@@ -30,10 +51,24 @@ const deactive = async (id) => {
   }
 };
 const userDelete = async (id) => {
-  if (window.confirm("Are you sure?")) {
+  if (window.confirm("Do you want to Delete?")) {
     deleteLoading.value = true;
     const response = await deleteUser(id);
     userRow.value.remove();
+  }
+};
+const activeBalance = async (id) => {
+  if (window.confirm("Do you want to send money?")) {
+    sendBalanceLoading.value = true;
+    const response = await sendActiveBalance(id);
+    if (response.status == "pass") {
+      user.value = response.data[0];
+      useToast.fire({
+        title: response.message,
+        icon: "success",
+      });
+    }
+    sendBalanceLoading.value = false;
   }
 };
 </script>
@@ -86,6 +121,19 @@ const userDelete = async (id) => {
       >
         <LoadingIcon v-show="loading" />
         <x-mark-icon v-show="!loading" class="w-5 h-5 stroke-2" />
+      </button>
+
+      <!-- Send active balance  -->
+      <button
+        title="Send 500 TK"
+        :disabled="sendBalanceLoading"
+        @click="activeBalance(user.id)"
+      >
+        <LoadingIcon v-show="sendBalanceLoading" />
+        <paper-airplane-icon
+          v-show="!sendBalanceLoading"
+          class="w-5 h-5 strock-2"
+        />
       </button>
     </Td>
   </tr>

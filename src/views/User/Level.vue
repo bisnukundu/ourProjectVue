@@ -63,6 +63,7 @@ const reloadPage = async () => {
         <tr>
           <Td>
             <router-link
+              class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_1' } }"
             >
               লেভেল-১</router-link
@@ -94,7 +95,7 @@ const reloadPage = async () => {
         </tr>
         <tr>
           <Td>
-            <router-link
+            <router-link  class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_2' } }"
             >
               লেভেল-২</router-link
@@ -126,7 +127,7 @@ const reloadPage = async () => {
         </tr>
         <tr>
           <Td>
-            <router-link
+            <router-link  class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_3' } }"
             >
               লেভেল-৩</router-link
@@ -158,7 +159,7 @@ const reloadPage = async () => {
         </tr>
         <tr>
           <Td>
-            <router-link
+            <router-link  class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_4' } }"
             >
               লেভেল-৪</router-link
@@ -190,7 +191,7 @@ const reloadPage = async () => {
         </tr>
         <tr>
           <Td>
-            <router-link
+            <router-link  class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_5' } }"
             >
               লেভেল-৫</router-link
@@ -222,7 +223,7 @@ const reloadPage = async () => {
         </tr>
         <tr>
           <Td>
-            <router-link
+            <router-link  class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_6' } }"
             >
               লেভেল-৬</router-link
@@ -254,7 +255,7 @@ const reloadPage = async () => {
         </tr>
         <tr>
           <Td>
-            <router-link
+            <router-link  class="hover:underline"
               :to="{ name: 'user.team', params: { level: 'level_7' } }"
             >
               লেভেল-৭</router-link

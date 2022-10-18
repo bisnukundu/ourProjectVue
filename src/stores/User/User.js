@@ -33,6 +33,10 @@ export const useUserStore = defineStore("user", function () {
 
     return referral_users.data;
   };
+  const getUser = async (id = null) => {
+    const response = await AxiosToken.get(`/user/user/${id ?? ""}`);
+    return response;
+  };
 
-  return { userRegister, userLogin, userLogout, referral_friend };
+  return { userRegister, userLogin, userLogout, referral_friend, getUser };
 });

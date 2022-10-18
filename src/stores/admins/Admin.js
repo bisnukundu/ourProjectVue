@@ -27,6 +27,11 @@ export const useAdminStore = defineStore("admin", function () {
     return response.data;
   };
 
+  const sendActiveBalance = async (id = "") => {
+    const response = await AxiosToken.put(`/admin/send-active-balance/${id}`);
+    return response.data;
+  };
+
   const deactiveUser = async (id = "") => {
     const response = await AxiosToken.put(`/admin/deactive-user/${id}`);
     return response.data;
@@ -37,5 +42,12 @@ export const useAdminStore = defineStore("admin", function () {
     return response;
   };
 
-  return { AdminLogin, getAllUser, activeUser, deactiveUser, deleteUser };
+  return {
+    AdminLogin,
+    getAllUser,
+    activeUser,
+    deactiveUser,
+    deleteUser,
+    sendActiveBalance,
+  };
 });
