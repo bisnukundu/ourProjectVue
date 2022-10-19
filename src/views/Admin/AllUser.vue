@@ -72,7 +72,7 @@ const reload = async () => {
         type="text"
         placeholder="Search User.."
         class="inline-block rounded-md ml-auto bg-slate-800 mb-2"
-        v-model.lazy.trim="searchUser"
+        v-model.trim="searchUser"
       />
       <table class="border-collapse text-left table-auto w-full text-sm">
         <thead>

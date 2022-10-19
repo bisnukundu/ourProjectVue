@@ -1,12 +1,14 @@
 <script setup>
-import Header from "../../components/Dashboard/Header.vue";
-import Sidebar from "../../components/Dashboard/Sidebar.vue";
 import Layout from "../../components/Dashboard/Layout.vue";
+import ActiveBalance from "../../components/balance/ActiveBalance.vue";
+import { useConfig } from "../../composable/useConfig";
+const user = useConfig();
 </script>
 
 <template>
   <layout>
     <div class="grid grid-cols-2 gap-10 mt-10">
+      <ActiveBalance :balance="user.getUserInfo()" />
       <div class="bg-slate-800 p-10 rounded-md">
         <h1 class="font-bold italic text-lg">আপনার বর্তমান ব্যালেন্স!</h1>
         <p class="mt-2">

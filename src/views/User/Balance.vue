@@ -6,9 +6,11 @@ import { useNumberConverter } from "../../composable/useNumberConverter.js";
 import PageReload from "../../components/PageReload.vue";
 import { useUserStore } from "../../stores/User/User";
 import { onMounted, ref } from "vue";
+import ActiveBalance from "../../components/balance/ActiveBalance.vue";
 
 const config = useConfig();
 const userStore = useUserStore();
+
 const user = ref();
 
 onMounted(() => {
@@ -28,25 +30,7 @@ const reload = async () => {
     </div>
     <template v-if="user">
       <div class="grid grid-cols-2 gap-10">
-        <div
-          :class="[{ 'opacity-60 select-none': user.status }]"
-          class="bg-slate-800 p-10 relative rounded-md border-gray-700 border"
-        >
-          <h1 class="font-bold italic text-lg">এক্টিভ ব্যালেন্স!</h1>
-          <p class="mt-2">{{ useNumberConverter(user.active_balance) }} টাকা</p>
-          <button
-            v-if="user.active_balance >= 250"
-            :disabled="[user.status == 0]"
-            :class="[
-              { 'text-green-500': user.status },
-              { 'text-red-500': !user.status },
-            ]"
-            class="top-0 right-0 font-extrabold absolute border px-3 py-1 rounded-md"
-          >
-            <small v-show="!user.status">এক্টিভ করুন</small>
-            <small v-show="user.status"> এক্টিভ হয়েছে</small>
-          </button>
-        </div>
+        <ActiveBalance :balance="user" />
 
         <div class="bg-slate-800 p-10 rounded-md border-gray-700 border">
           <h1 class="font-bold italic text-lg">ইনকাম ব্যালেন্স!</h1>

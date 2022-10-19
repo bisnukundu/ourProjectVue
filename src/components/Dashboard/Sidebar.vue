@@ -19,7 +19,12 @@ const userInfo = config.getUserInfo();
         <x-circle-icon class="w-8 h-8 text-white inline-block text-right" />
       </button>
     </div>
-    <p class="italic font-bold text-slate-400 text-center mt-3">LOGO</p>
+    <p
+      style="font-family: 'Gabriola'"
+      class="font-bold text-lg text-slate-400 text-center mt-3"
+    >
+      {{ userInfo.user_name }}
+    </p>
     <div
       class="text-slate-400 space-y-5 text-sm px-5 cursor-pointer py-3 rounded-md mt-5"
     >
@@ -66,8 +71,6 @@ const userInfo = config.getUserInfo();
           <chart-bar-icon class="w-5 h-5" />
           <span>Level</span>
         </router-link>
-
-     
 
         <!-- //Balance  -->
 
