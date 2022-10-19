@@ -2,6 +2,7 @@ import axios from "axios";
 import AxiosToken from "../../axios/AxiosToken";
 import { defineStore } from "pinia";
 import { useConfig } from "../../composable/useConfig";
+import { data } from "autoprefixer";
 
 export const useAdminStore = defineStore("admin", function () {
   const config = useConfig();
@@ -27,8 +28,8 @@ export const useAdminStore = defineStore("admin", function () {
     return response.data;
   };
 
-  const sendActiveBalance = async (id = "") => {
-    const response = await AxiosToken.put(`/admin/send-active-balance/${id}`);
+  const sendActiveBalance = async (data = {}) => {
+    const response = await AxiosToken.put(`/admin/send-active-balance`, data);
     return response.data;
   };
 

@@ -1,8 +1,8 @@
 <script setup>
+import { onMounted, ref, watch } from "vue";
 import Layout from "../../components/Dashboard/Layout.vue";
 import Th from "../../components/table/Th.vue";
 
-import { onMounted, ref, watch } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import Loading from "../../components/Loading.vue";
 import Pagination from "../../components/table/Pagination.vue";

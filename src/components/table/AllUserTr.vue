@@ -9,17 +9,33 @@ import {
 
 import LoadingIcon from "../../components/LoadingIcon.vue";
 import { useAdminStore } from "../../stores/admins/Admin";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useToast } from "../../composable/useToast.js";
+import Swal from "sweetalert2";
 const props = defineProps(["data", "index"]);
 const { deactiveUser, activeUser, deleteUser, sendActiveBalance } =
   useAdminStore();
 const loading = ref(false);
 const sendBalanceLoading = ref(false);
 const deleteLoading = ref(false);
-const user = ref(props.data);
+const user = ref();
 const userRow = ref();
 
+watch(
+  () => {
+    props.data;
+  },
+  () => {
+    user.value = props.data;
+  },
+  {
+    deep: true,
+  }
+);
+
+onMounted(() => {
+  user.value = props.data;
+});
 const active = async (id) => {
   if (window.confirm("Do you want to Active account?")) {
     loading.value = true;
@@ -54,13 +70,32 @@ const userDelete = async (id) => {
   if (window.confirm("Do you want to Delete?")) {
     deleteLoading.value = true;
     const response = await deleteUser(id);
+
     userRow.value.remove();
+
+    useToast.fire({
+      title: "Delete Successfully",
+      icon: "success",
+    });
   }
 };
-const activeBalance = async (id) => {
-  if (window.confirm("Do you want to send money?")) {
+
+const sendBalanceInput = async (id) => {
+  const res = await Swal.fire({
+    title: "কত টাকা পাঠাতে চান?",
+    input: "number",
+    inputLabel: "টাকা লিখুন",
+    inputValue: "",
+    showCancelButton: true,
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to write something!";
+      }
+    },
+  });
+  if (res.isConfirmed) {
     sendBalanceLoading.value = true;
-    const response = await sendActiveBalance(id);
+    const response = await sendActiveBalance({ id, balance: res.value });
     if (response.status == "pass") {
       user.value = response.data[0];
       useToast.fire({
@@ -74,6 +109,7 @@ const activeBalance = async (id) => {
 </script>
 <template>
   <tr
+    v-if="user"
     ref="userRow"
     :class="[{ 'animate-pulse': deleteLoading }, { 'animate-pulse': loading }]"
   >
@@ -127,7 +163,7 @@ const activeBalance = async (id) => {
       <button
         title="Send 500 TK"
         :disabled="sendBalanceLoading"
-        @click="activeBalance(user.id)"
+        @click="sendBalanceInput(user.id)"
       >
         <LoadingIcon v-show="sendBalanceLoading" />
         <paper-airplane-icon
