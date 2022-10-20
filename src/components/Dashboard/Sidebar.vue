@@ -7,6 +7,7 @@ import {
   XCircleIcon,
   CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
+import Verify from "../../assets/img/verify.svg";
 import { useConfig } from "../../composable/useConfig";
 
 const config = useConfig();
@@ -19,12 +20,22 @@ const userInfo = config.getUserInfo();
         <x-circle-icon class="w-8 h-8 text-white inline-block text-right" />
       </button>
     </div>
-    <p
-      style="font-family: 'Gabriola'"
-      class="font-bold text-lg text-slate-400 text-center mt-3"
-    >
-      {{ userInfo.user_name }}
-    </p>
+    <div class="grid grid-flow-col items-center mt-2">
+      <p
+        style="font-family: 'Gabriola'"
+        :class="[userInfo.status ? 'text-right' : 'text-center']"
+        class="font-bold text-xl text-slate-400"
+      >
+        {{ userInfo.user_name }}
+      </p>
+      <img
+        v-if="userInfo.status"
+        class="w-8 inline-block"
+        :src="Verify"
+        alt="verify_img"
+      />
+    </div>
+
     <div
       class="text-slate-400 space-y-5 text-sm px-5 cursor-pointer py-3 rounded-md mt-5"
     >

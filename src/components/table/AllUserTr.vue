@@ -93,6 +93,7 @@ const sendBalanceInput = async (id) => {
       }
     },
   });
+
   if (res.isConfirmed) {
     sendBalanceLoading.value = true;
     const response = await sendActiveBalance({ id, balance: res.value });

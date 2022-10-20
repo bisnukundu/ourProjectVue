@@ -2,8 +2,6 @@ import axios from "axios";
 import AxiosToken from "../../axios/AxiosToken";
 import { defineStore } from "pinia";
 import { useConfig } from "../../composable/useConfig";
-import { data } from "autoprefixer";
-
 export const useAdminStore = defineStore("admin", function () {
   const config = useConfig();
 

@@ -1,13 +1,14 @@
 <script setup>
 import Layout from "../../components/Dashboard/Layout.vue";
-import ls from "localstorage-slim";
 import { useConfig } from "../../composable/useConfig";
 import { useNumberConverter } from "../../composable/useNumberConverter.js";
 import PageReload from "../../components/PageReload.vue";
 import { useUserStore } from "../../stores/User/User";
 import { onMounted, ref } from "vue";
-import { useAdminStore } from "../../stores/admins/Admin";
+import { useAdminStore } from "../../stores/admins/Admin.js";
 import { useToast } from "../../composable/useToast";
+import ls from "localstorage-slim";
+import Verify from "../../assets/img/verify.svg";
 
 const config = useConfig();
 const userStore = useUserStore();
@@ -75,9 +76,14 @@ const active = async (id) => {
             ]"
             class="top-0 right-0 font-extrabold absolute border px-3 py-1 rounded-md"
           >
-            <small v-show="!user.status">এক্টিভ করুন</small>
-            <small v-show="user.status"> এক্টিভ হয়েছে</small>
+            <small v-if="!user.status">এক্টিভ করুন</small>
           </button>
+          <img
+            class="top-0 w-20 right-0 font-extrabold absolute px-3 py-1 rounded-md"
+            :src="Verify"
+            v-if="user.status"
+            alt="verify_img"
+          />
         </div>
 
         <div class="bg-slate-800 p-10 rounded-md border-gray-700 border">
