@@ -6,6 +6,7 @@ import {
   UserGroupIcon,
   XCircleIcon,
   CurrencyDollarIcon,
+  PaperAirplaneIcon,
 } from "@heroicons/vue/24/outline";
 import Verify from "../../assets/img/verify.svg";
 import { useConfig } from "../../composable/useConfig";
@@ -92,6 +93,16 @@ const userInfo = config.getUserInfo();
         >
           <currency-dollar-icon class="w-5 h-5" />
           <span>Balance</span>
+        </router-link>
+
+        <!-- //Send Balance  -->
+        <router-link
+          class="flex rounded-md py-2 flex-row space-x-2 items-center"
+          :to="{ name: 'user.sendMoney' }"
+          active-class="border border-gray-600 px-5 font-bold"
+        >
+          <paper-airplane-icon class="w-5 h-5" />
+          <span>Send Balance</span>
         </router-link>
       </template>
     </div>

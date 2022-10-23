@@ -1,13 +1,13 @@
 <script setup>
 import Layout from "../../components/Dashboard/Layout.vue";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/outline";
-import { onMounted, reactive, ref } from "vue";
-import ls from "localstorage-slim";
+import { reactive } from "vue";
+
 import { useUserStore } from "../../stores/User/User";
-import Swal from "sweetalert2";
+
 import { useToast } from "../../composable/useToast";
 import { useAdminStore } from "../../stores/admins/Admin";
-const users = ref([]);
+
 const { getUserByUserName } = useUserStore();
 const { sendBalance } = useAdminStore();
 

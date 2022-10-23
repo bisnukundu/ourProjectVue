@@ -68,13 +68,7 @@ const active = async (id) => {
             }}
             টাকা
           </p>
-          <!-- send active balance  -->
-          <router-link
-            class="bottom-0 right-0 p-3 absolute"
-            :to="{ name: 'user.sendMoney' }"
-          >
-            <PaperAirplaneIcon class="w-7 h-w-7" />
-          </router-link>
+      
 
           <button
             @click="active(user.id)"
