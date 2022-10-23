@@ -5,6 +5,7 @@ import {
   CheckIcon,
   XMarkIcon,
   PaperAirplaneIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/vue/24/outline";
 
 import LoadingIcon from "../../components/LoadingIcon.vue";
@@ -13,7 +14,7 @@ import { onMounted, ref, watch } from "vue";
 import { useToast } from "../../composable/useToast.js";
 import Swal from "sweetalert2";
 const props = defineProps(["data", "index"]);
-const { deactiveUser, activeUser, deleteUser, sendActiveBalance } =
+const { deactiveUser, activeUser, deleteUser, adminSendBalance } =
   useAdminStore();
 const loading = ref(false);
 const sendBalanceLoading = ref(false);
@@ -84,7 +85,7 @@ const sendBalanceInput = async (id) => {
   const res = await Swal.fire({
     title: "কত টাকা পাঠাতে চান?",
     input: "number",
-    inputLabel: "টাকা লিখুন",
+    inputLabel: "(Active Balance) টাকা লিখুন",
     inputValue: "",
     showCancelButton: true,
     inputValidator: (value) => {
@@ -96,7 +97,11 @@ const sendBalanceInput = async (id) => {
 
   if (res.isConfirmed) {
     sendBalanceLoading.value = true;
-    const response = await sendActiveBalance({ id, balance: res.value });
+    const response = await adminSendBalance({
+      id,
+      balance: res.value,
+      balance_type: "active",
+    });
     if (response.status == "pass") {
       user.value = response.data[0];
       useToast.fire({
@@ -104,6 +109,38 @@ const sendBalanceInput = async (id) => {
         icon: "success",
       });
     }
+    sendBalanceLoading.value = false;
+  }
+};
+const sendIncomeBalanceInput = async (id) => {
+  const res = await Swal.fire({
+    title: "কত টাকা পাঠাতে চান?",
+    input: "number",
+    inputLabel: "(Income Balance) টাকা লিখুন",
+    inputValue: "",
+    showCancelButton: true,
+    inputValidator: (value) => {
+      if (!value) {
+        return "You need to write something!";
+      }
+    },
+  });
+
+  if (res.isConfirmed) {
+    sendBalanceLoading.value = true;
+    const response = await adminSendBalance({
+      id,
+      balance: res.value,
+      balance_type: "income",
+    });
+    if (response.status == "pass") {
+      user.value = response.data[0];
+      useToast.fire({
+        title: response.message,
+        icon: "success",
+      });
+    }
+    console.log(response);
     sendBalanceLoading.value = false;
   }
 };
@@ -168,6 +205,19 @@ const sendBalanceInput = async (id) => {
       >
         <LoadingIcon v-show="sendBalanceLoading" />
         <paper-airplane-icon
+          v-show="!sendBalanceLoading"
+          class="w-5 h-5 strock-2"
+        />
+      </button>
+
+      <!-- Send Income balance  -->
+      <button
+        title="Send 500 TK"
+        :disabled="sendBalanceLoading"
+        @click="sendIncomeBalanceInput(user.id)"
+      >
+        <LoadingIcon v-show="sendBalanceLoading" />
+        <currency-dollar-icon
           v-show="!sendBalanceLoading"
           class="w-5 h-5 strock-2"
         />

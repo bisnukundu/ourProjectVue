@@ -38,5 +38,16 @@ export const useUserStore = defineStore("user", function () {
     return response;
   };
 
-  return { userRegister, userLogin, userLogout, referral_friend, getUser };
+  const getUserByUserName = async (username = "") => {
+    return await AxiosToken.get(`user/username/${username}`);
+  };
+
+  return {
+    userRegister,
+    userLogin,
+    userLogout,
+    referral_friend,
+    getUser,
+    getUserByUserName,
+  };
 });

@@ -8,7 +8,9 @@ import { onMounted, ref } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import { useToast } from "../../composable/useToast";
 import ls from "localstorage-slim";
+import { PaperAirplaneIcon } from "@heroicons/vue/24/outline";
 import Verify from "../../assets/img/verify.svg";
+import Swal from "sweetalert2";
 
 const config = useConfig();
 const userStore = useUserStore();
@@ -19,6 +21,7 @@ const user = ref();
 onMounted(() => {
   user.value = config.getUserInfo();
 });
+const { sendActiveBalance, sendIncomeBalance } = useAdminStore();
 
 const reload = async () => {
   const response = await userStore.getUser();
@@ -56,19 +59,30 @@ const active = async (id) => {
     <template v-if="user">
       <div class="grid grid-cols-2 gap-10">
         <div
-          :class="[{ 'select-none opacity-60': user.status }]"
           class="bg-slate-800 p-10 relative rounded-md border-gray-700 border"
         >
           <h1 class="font-bold italic text-lg">এক্টিভ ব্যালেন্স!</h1>
-          <p class="mt-2">
+          <p aria-disabled="" class="mt-2">
             {{
               user.active_balance ? useNumberConverter(user.active_balance) : 0
             }}
             টাকা
           </p>
+          <!-- send active balance  -->
+          <router-link
+            class="bottom-0 right-0 p-3 absolute"
+            :to="{ name: 'user.sendMoney' }"
+          >
+            <PaperAirplaneIcon class="w-7 h-w-7" />
+          </router-link>
+
           <button
             @click="active(user.id)"
-            v-if="user.active_balance >= 250 && user.income_balance >= 250"
+            v-if="
+              user.active_balance >= 250 &&
+              user.income_balance >= 250 &&
+              !user.status
+            "
             :disabled="user.status"
             :class="[
               { 'text-green-500': user.status },
@@ -76,7 +90,7 @@ const active = async (id) => {
             ]"
             class="top-0 right-0 font-extrabold absolute border px-3 py-1 rounded-md"
           >
-            <small v-if="!user.status">এক্টিভ করুন</small>
+            <small>এক্টিভ করুন</small>
           </button>
           <img
             class="top-0 w-20 right-0 font-extrabold absolute px-3 py-1 rounded-md"

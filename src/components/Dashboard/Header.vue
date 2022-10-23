@@ -19,11 +19,7 @@ const loading = ref(false);
 const logout = async () => {
   loading.value = true;
   await userStore.userLogout();
-  localStorage.removeItem("loginToken");
-  localStorage.removeItem("userinfo");
-  localStorage.removeItem("userLevel");
-  localStorage.removeItem("referral_friend");
-  ls.remove("team");
+  ls.clear();
   loading.value = false;
   router.push({ name: "user.login" });
 };

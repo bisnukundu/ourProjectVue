@@ -88,6 +88,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/user/send-money",
+      name: "user.sendMoney",
+      component: () => import("../views/User/SendMoney.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 
