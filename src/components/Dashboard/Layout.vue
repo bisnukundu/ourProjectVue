@@ -14,13 +14,15 @@ const sidebarToggle = () => {
       <Header @sidebar="sidebarToggle" />
     </div>
     <div
-      class="lg:block lg:col-span-2 absolute lg:static lg:left-0"
+      class="lg:block lg:col-span-2 absolute lg:static lg:left-0 z-50"
       :class="[sidebar ? '' : 'hidden -left-full']"
     >
-      <Sidebar @sidebar="sidebarToggle"/>
+      <Sidebar @sidebar="sidebarToggle" />
     </div>
 
-    <div class="col-span-12 overflow-auto h-full lg:col-span-9 lg:pl-16 text-slate-400">
+    <div
+      class="col-span-12 overflow-auto h-full lg:col-span-9 lg:pl-16 text-slate-400"
+    >
       <slot></slot>
     </div>
   </div>

@@ -7,7 +7,11 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config_request) {
-  config_request.headers = { Authorization: `Bearer ${config.getToken()}` };
+  config_request.headers = {
+    Authorization: `Bearer ${config.getToken()}`,
+    "Access-Control-Allow-Origin": "http://maruf.ungolpedealtura.es/",
+  };
+
   return config_request;
 });
 export default instance;
