@@ -15,9 +15,16 @@ export const useAdminStore = defineStore("admin", function () {
   };
 
   const getAllUser = async (page = 1, searchName = "") => {
-    const allUser = await AxiosToken.get(
-      `/admin/all-user/${searchName}/?page=${page}`
-    );
+    let allUser;
+
+    if (searchName) {
+      allUser = await AxiosToken.get(
+        `/admin/all-user/${searchName}?page=${page}`
+      );
+    } else {
+      allUser = await AxiosToken.get(`/admin/all-user?page=${page}`);
+    }
+
     return allUser.data;
   };
 
