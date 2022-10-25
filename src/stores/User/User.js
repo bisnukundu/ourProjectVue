@@ -16,6 +16,7 @@ export const useUserStore = defineStore("user", function () {
   const userLogin = async (loginData) => {
     try {
       const response = await axios.post(`/user/login`, loginData);
+      console.log("UserStore login", response);
       return response;
     } catch (error) {
       return error.response;

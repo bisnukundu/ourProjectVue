@@ -8,6 +8,7 @@ export const useAdminStore = defineStore("admin", function () {
   const AdminLogin = async (loginData) => {
     try {
       const response = await axios.post(`/admin/login`, loginData);
+      console.log("AdminStore login", response);
       return response;
     } catch (error) {
       return error.response;

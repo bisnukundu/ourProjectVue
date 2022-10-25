@@ -26,7 +26,7 @@ const login = async () => {
   const validate = v$.value.$validate();
   if (validate) {
     const user = await userStore.AdminLogin(loginData);
-
+    console.log("Admin Login", user);
     if (user.data.status == "faild") {
       msg.value = "আপনার UserName অথবা Password ভুল হয়েছে";
       return;

@@ -27,7 +27,7 @@ const login = async () => {
   try {
     if (validate) {
       const user = await userStore.userLogin(loginData);
-
+      console.log("User Login", user);
       if (user.data.status == "faild") {
         msg.value = "আপনার UserName অথবা Password ভুল হয়েছে";
         return;
