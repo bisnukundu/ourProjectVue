@@ -21,10 +21,9 @@ const user = ref();
 onMounted(() => {
   user.value = config.getUserInfo();
 });
-const { sendActiveBalance, sendIncomeBalance } = useAdminStore();
 
 const reload = async () => {
-  const response = await userStore.getUser();
+  const response = await userStore.getUser(user.value.id);
   ls.set("userinfo", response.data[0]);
   user.value = response.data[0];
 };
@@ -68,7 +67,6 @@ const active = async (id) => {
             }}
             টাকা
           </p>
-      
 
           <button
             @click="active(user.id)"

@@ -1,12 +1,13 @@
 <script setup>
 import Layout from "../../components/Dashboard/Layout.vue";
 import { PaperAirplaneIcon } from "@heroicons/vue/24/outline";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 import { useUserStore } from "../../stores/User/User";
 
 import { useToast } from "../../composable/useToast";
 import { useAdminStore } from "../../stores/admins/Admin";
+import LoadingIcon from "../../components/LoadingIcon.vue";
 
 const { getUserByUserName } = useUserStore();
 const { sendBalance } = useAdminStore();
@@ -17,6 +18,7 @@ const info = reactive({
   balance_type: "",
 });
 
+const isLoading = ref(false);
 const sendBalanceToUser = async () => {
   if (
     info.balance.length == 0 ||
@@ -28,6 +30,7 @@ const sendBalanceToUser = async () => {
       icon: "error",
     });
   } else {
+    isLoading.value = true;
     const res = await getUserByUserName(info.user_name);
     if (res.data.length > 0) {
       const response = await sendBalance({
@@ -40,11 +43,13 @@ const sendBalanceToUser = async () => {
           title: response.message,
           icon: "error",
         });
+        isLoading.value = false;
       } else {
         useToast.fire({
           title: "টাকা চলে গেছে",
           icon: "success",
         });
+        isLoading.value = false;
       }
     } else {
       useToast.fire({
@@ -96,8 +101,13 @@ const sendBalanceToUser = async () => {
           />
           <p>Income Balance</p>
         </label>
-        <button type="submit" class="border px-10 rounded-md py-2">
-          <PaperAirplaneIcon class="w-5 h-5" />
+        <button
+          :disabled="isLoading"
+          type="submit"
+          class="border px-10 rounded-md py-2"
+        >
+          <PaperAirplaneIcon class="w-5 h-5" v-show="!isLoading" />
+          <LoadingIcon v-show="isLoading" />
         </button>
       </form>
     </div>

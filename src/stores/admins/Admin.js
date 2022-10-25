@@ -38,7 +38,7 @@ export const useAdminStore = defineStore("admin", function () {
     return response.data;
   };
   const adminSendBalance = async (data = {}) => {
-    const response = await AxiosToken.put(`/admin/admin-end-balance`, data);
+    const response = await AxiosToken.put(`/admin/admin-send-balance`, data);
     return response.data;
   };
 
