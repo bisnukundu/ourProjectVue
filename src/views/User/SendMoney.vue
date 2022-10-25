@@ -56,6 +56,7 @@ const sendBalanceToUser = async () => {
         title: "ইউজার নেম ভুল হয়েছে",
         icon: "error",
       });
+      isLoading.value = false;
     }
   }
 };
