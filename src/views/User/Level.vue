@@ -44,7 +44,7 @@ const reloadPage = async () => {
 };
 </script>
 <template>
-  <Layout>
+  <Layout title="Level">
     <div class="text-right mt-10 mb-2">
       <PageReload :reloadFn="reloadPage" />
     </div>

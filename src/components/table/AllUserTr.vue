@@ -163,6 +163,10 @@ const sendIncomeBalanceInput = async (id) => {
         >Deactive</small
       >
     </Td>
+    <Td>
+      {{ user.active_balance }} /  {{ user.income_balance }}
+    </Td>
+    
     <Td class="space-x-5">
       <!-- Delete Button  -->
       <button

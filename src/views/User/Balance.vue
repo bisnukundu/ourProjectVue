@@ -8,9 +8,7 @@ import { onMounted, ref } from "vue";
 import { useAdminStore } from "../../stores/admins/Admin.js";
 import { useToast } from "../../composable/useToast";
 import ls from "localstorage-slim";
-import { PaperAirplaneIcon } from "@heroicons/vue/24/outline";
-import Verify from "../../assets/img/verify.svg";
-import Swal from "sweetalert2";
+import { ShieldCheckIcon } from "@heroicons/vue/24/outline";
 
 const config = useConfig();
 const userStore = useUserStore();
@@ -51,7 +49,7 @@ const active = async (id) => {
 };
 </script>
 <template>
-  <Layout>
+  <Layout title="Balance">
     <div class="mt-10 text-right">
       <PageReload :reload-fn="reload" />
     </div>
@@ -84,11 +82,9 @@ const active = async (id) => {
           >
             <small>এক্টিভ করুন</small>
           </button>
-          <img
-            class="top-0 w-20 right-0 font-extrabold absolute px-3 py-1 rounded-md"
-            :src="Verify"
+          <ShieldCheckIcon
             v-if="user.status"
-            alt="verify_img"
+            class="top-0 w-14 stroke-[2px] right-0 font-extrabold absolute px-3 py-1 rounded-md text-green-600"
           />
         </div>
 

@@ -43,6 +43,11 @@ export const useUserStore = defineStore("user", function () {
     return await AxiosToken.get(`user/username/${username}`);
   };
 
+  const balanceHistory = async (page = 1) => {
+    const response = await AxiosToken.get(`user/balance-history?page=${page}`);
+    return response.data;
+  };
+
   return {
     userRegister,
     userLogin,
@@ -50,5 +55,6 @@ export const useUserStore = defineStore("user", function () {
     referral_friend,
     getUser,
     getUserByUserName,
+    balanceHistory,
   };
 });

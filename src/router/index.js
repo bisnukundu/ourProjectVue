@@ -96,6 +96,14 @@ const router = createRouter({
         requiresAuth: true,
       },
     },
+    {
+      path: "/user/balance-history",
+      name: "user.balanceHistory",
+      component: () => import("../views/User/BalanceHistory.vue"),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 

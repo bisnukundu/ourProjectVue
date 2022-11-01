@@ -34,7 +34,6 @@ let ruels = {
   full_name: { required },
   email: { required },
   phone: { required, minLength: minLength(11), maxLength: maxLength(11) },
-  sponserId: { required },
   password: { required, minLength: minLength(6) },
   password_confirmation: {
     required,
@@ -163,21 +162,13 @@ const submitRegister = async () => {
           />
         </div>
 
-        <div class="my-3">
-          <error-message
-            v-if="v$.sponserId.$error"
-            msg="আপনার Sponser Name ভুলে হয়েছে!"
-            fild="sponserId"
-          />
-
+        <div v-if="RegisterData.sponserId" class="my-3">
           <input
             class="text-gray-700 font-bold bg-gray-300 rounded-md block w-full mb-5"
             type="text"
             disabled="false"
             placeholder="SponserID..."
             v-model="RegisterData.sponserId"
-            @blur="v$.sponserId.$touch"
-            :class="[{ 'border-red-900 border-2': v$.sponserId.$error }]"
           />
         </div>
 

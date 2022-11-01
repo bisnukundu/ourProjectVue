@@ -32,12 +32,14 @@ const sendBalanceToUser = async () => {
   } else {
     isLoading.value = true;
     const res = await getUserByUserName(info.user_name);
+    console.log(res);
     if (res.data.length > 0) {
       const response = await sendBalance({
         id: res.data[0].id,
         balance: info.balance,
         balance_type: info.balance_type,
       });
+      console.log(response);
       if (response.status == "faild") {
         useToast.fire({
           title: response.message,
@@ -62,7 +64,7 @@ const sendBalanceToUser = async () => {
 };
 </script>
 <template>
-  <Layout>
+  <Layout title="SendMoney">
     <div class="bg-slate-800 border border-gray-700 p-10 rounded-md mt-5">
       <form class="space-y-4" @submit.prevent="sendBalanceToUser">
         <input

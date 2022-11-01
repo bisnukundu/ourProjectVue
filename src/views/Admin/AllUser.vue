@@ -26,6 +26,8 @@ watch(searchUser, async () => {
 
 const dataProcess = (response) => {
   if (response.status !== "faild") {
+    table_sl.value = response.data.from;
+    current_page.value = response.data.current_page;
     allUser.value = response.data.data;
     paginate_next.value =
       response.data.next_page_url == null
@@ -42,30 +44,24 @@ const dataProcess = (response) => {
 
 onMounted(async () => {
   const response = await getAllUser();
-  table_sl.value = response.data.from;
-  current_page.value = response.data.current_page;
   dataProcess(response);
 });
 
 const paginate_controll = async (page) => {
   paginateLoading.value = true;
   const response = await getAllUser(page);
-  table_sl.value = response.data.from;
-  current_page.value = response.data.current_page;
   dataProcess(response);
   paginateLoading.value = false;
 };
 
 const reload = async () => {
   const response = await getAllUser(current_page.value);
-  table_sl.value = response.data.from;
-  current_page.value = response.data.current_page;
   dataProcess(response);
 };
 </script>
 
 <template>
-  <Layout>
+  <Layout title="All-User">
     <div class="mt-10 text-right space-x-5">
       <PageReload :reload-fn="reload" />
       <input
@@ -79,6 +75,7 @@ const reload = async () => {
           <Th>ID</Th>
           <Th>UserName</Th>
           <Th>Status</Th>
+          <Th>Active / Icome</Th>
           <Th>Action</Th>
         </thead>
         <tbody>

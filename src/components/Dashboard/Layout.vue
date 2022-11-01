@@ -2,6 +2,10 @@
 import { ref } from "vue";
 import Header from "../../components/Dashboard/Header.vue";
 import Sidebar from "../../components/Dashboard/Sidebar.vue";
+import { useConfig } from "../../composable/useConfig";
+const props = defineProps(["title"]);
+const config = useConfig();
+window.document.title = `${props.title} | ${config.APP_NAME}`;
 const sidebar = ref(false);
 const sidebarToggle = () => {
   sidebar.value = !sidebar.value;

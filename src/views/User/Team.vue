@@ -38,7 +38,7 @@ const reloadPage = async () => {
 </script>
 
 <template>
-  <Layout>
+  <Layout title="Team">
     <div class="text-right mt-10">
       <!-- Reload Button  -->
       <PageReload :reloadFn="reloadPage" />

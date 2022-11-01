@@ -69,7 +69,7 @@ const reload = async () => {
 };
 </script>
 <template>
-  <Layout>
+  <Layout title="Referral-Friend">
     <div class="text-right mb-2 mt-10">
       <PageReload :reload-fn="reload" />
     </div>

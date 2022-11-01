@@ -6,10 +6,11 @@ import { useConfig } from "../../composable/useConfig.js";
 const config = useConfig();
 
 const userInfo = config.getUserInfo();
+let ref_link = `${config.DOMAIN}/user/register/?sopnser=${userInfo.user_name}`;
 </script>
 
 <template>
-  <Layout>
+  <Layout title="Profile">
     <div class="w-full text-center mt-28 rounded-md border border-dashed py-5">
       <user-circle-icon
         :class="[userInfo.status ? 'stroke-green-700' : 'stroke-red-700']"
@@ -37,14 +38,12 @@ const userInfo = config.getUserInfo();
         </p>
         <p
           @click="
-            UseCopyText(
-              userInfo.referral_link,
-              'আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!'
-            )
+            UseCopyText(ref_link, 'আপনার রেফারেল লিঙ্ক কপি করা সম্পূর্ণ হয়েছে!')
           "
           class="bg-slate-800 py-2 cursor-pointer px-5 rounded-md"
         >
-          <b>Referral Link</b>: {{ userInfo.referral_link }}
+          <b>Referral Link</b>:
+          {{ ref_link }}
         </p>
       </div>
     </div>
